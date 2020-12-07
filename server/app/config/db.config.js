@@ -1,11 +1,15 @@
-const creds = require("../../credentials.js");
+const creds = require('../../credentials.js')
 
 module.exports = {
+    DB: `${creds.RDS_DB}`,
     HOST: `${creds.RDS_HOST}`,
     USER: `${creds.RDS_USER}`,
     PASSWORD: `${creds.RDS_PASSWORD}`,
-    DB: `${creds.RDS_DB}`,
+    PORT: `${creds.RDS_PORT}`,
     dialect: "mysql",
+    dialectOptions: {
+        ssl: true
+    },
     pool: {
         max: 5,
         min: 0,
