@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const beer_master = sequelize.define("beer_master", {
+    const Beer = sequelize.define("beer", {
         name: {
             type: Sequelize.STRING
         }, 
@@ -21,7 +21,9 @@ module.exports = (sequelize, Sequelize) => {
         container: {
             type: Sequelize.STRING
         }   
+    }, {
+        tableName: "beer_master"
     });
 
-    return beer;
+    return Beer;
 };
