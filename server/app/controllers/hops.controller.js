@@ -5,16 +5,6 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
-
-};
-
-// Retrieve all Tutorials from the database.
-exports.findAll = (req, res) => {
-
-};
-
-// Find a single Tutorial with an id
-exports.findOne = (req, res) => {
     // Validate request
     if (!req.body.title) {
         res.status(400).send({
@@ -44,6 +34,26 @@ exports.findOne = (req, res) => {
                     err.message || "An error occurred while adding the beer."
             });
         });
+};
+
+// Retrieve all Beers from the database.
+exports.findAll = (req, res) => {
+
+    Beer.findAll()
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving tutorials."
+            });
+        });
+};
+
+// Find a single Tutorial with an id
+exports.findOne = (req, res) => {
+    
 };
 
 // Update a Tutorial by the id in the request
