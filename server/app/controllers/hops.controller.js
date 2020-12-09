@@ -1,21 +1,22 @@
 const db = require("../models");
-const beer = db.beer;
+// console.log(db)
+const Beer = db.beers;
 const Op = db.Sequelize.Op;
 
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.title) {
+    if (!req.body.name) {
         res.status(400).send({
-            message: "Content can not be empty!"
+            message: req
         });
         return;
     }
 
     // Create a Tutorial
     const beer = {
-        title: req.body.title,
+        name: req.body.name,
         details: req.body.details,
         brewery: req.body.published,
         alc_per: req.body.alc_per,
@@ -54,7 +55,17 @@ exports.findAll = (req, res) => {
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
-    
+    const id = req.params.id;
+
+    beer.findByPk(id)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving Beer with id=" + id
+            });
+        });
 };
 
 // Update a Tutorial by the id in the request

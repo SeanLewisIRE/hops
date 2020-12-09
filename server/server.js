@@ -30,6 +30,8 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to Hops. The unopinionated beer list" });
 });
 
+require("./app/routes/hops.routes")(app);
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`)
