@@ -7,23 +7,25 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.name) {
-        res.status(400).send({
-            message: req
-        });
-        return;
-    }
+    // if (!req.body.name) {
+    //     res.status(400).send({
+    //         message: req
+    //     });
+    //     return;
+    // }
 
-    // Create a Tutorial
     const beer = {
         name: req.body.name,
         details: req.body.details,
-        brewery: req.body.published,
+        beer_type: req.body.beer_type,
+        brewery: req.body.brewery,
         alc_per: req.body.alc_per,
-        country_origin: req.country_origin,
-        container: req.container
+        country_origin: req.body.country_origin,
+        container: req.body.container
     };
-
+    // console.log(req)
+    // console.log(res)
+    console.log(beer)
     
     // Save Tutorial in the database
     Beer.create(beer)
@@ -57,7 +59,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    beer.findByPk(id)
+    Beer.findByPk(id)
         .then(data => {
             res.send(data);
         })
