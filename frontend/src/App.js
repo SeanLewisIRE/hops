@@ -1,12 +1,12 @@
 import './App.css';
-import { Router, Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 
 import BeerList from './components/BeerList/BeerList'
 import AddBeer from './components/AddBeer/AddBeer'
 
 function App() {
   return (
-    <Router>
+
       <div className="App">
         <header className="App-header">
         <ul>
@@ -22,20 +22,23 @@ function App() {
           </li>
         </ul>
         </header>
-      </div>
 
       <div>
         <Switch>
-          <Route path="/beerList">
-            <BeerList />
+          <Route path="/addBeer">
+            <AddBeer />
           </Route>
           <Route path="/addBeer">
             <AddBeer />
           </Route>
+          <Route path="/">
+            <BeerList />
+          </Route>
+
         </Switch>
       </div>
+      </div>
 
-    </Router>
   );
 }
 

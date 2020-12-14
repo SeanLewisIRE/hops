@@ -6,6 +6,10 @@ class hopsDataService {
         return http.get("/beers")
     }
 
+    get(id) {
+        return http.get(`/beers/${id}`);
+    }
+
     create(data) {
         return http.post("/beers", data)
     }
