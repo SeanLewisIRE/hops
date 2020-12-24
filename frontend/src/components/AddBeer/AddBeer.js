@@ -11,7 +11,8 @@ class AddBeer extends Component {
         this.onChangeAlcPer = this.onChangeAlcPer.bind(this);
         this.onChangeCountry = this.onChangeCountry.bind(this);
         this.onChangeContainer = this.onChangeContainer.bind(this);
-
+        this.saveBeer = this.saveBeer.bind(this);
+        
         this.state = {
             id: null,
             name: "",
@@ -78,7 +79,7 @@ class AddBeer extends Component {
             country: this.state.country,
             container: this.state.container
         };
-
+        console.log(data)
         hopsDataService.create(data)
             .then(response => {
                 this.setState({
@@ -218,7 +219,7 @@ class AddBeer extends Component {
                                 />
                             </div>
 
-                            <button onClick={this.saveTutorial} className="btn btn-success">
+                            <button onClick={this.saveBeer}>
                                 Submit
             </button>
                         </div>

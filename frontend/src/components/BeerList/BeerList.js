@@ -30,14 +30,22 @@ class BeerList extends Component {
 
     render() {
         const {beers} = this.state
-        console.log("hi")
-        console.log(beers)
+        // const content = beers.map((beer, index) => 
+        //     <div>{beer.name}</div>
+        // );
+        // console.log(content)
         return(
-            <h4>Beer List</h4>
-        //    {beers.map((beer, index) => (
-        //             {beer.name}
-        //     ))
-        // }
+            <div>
+                <h4>Beer List</h4>
+                <ul>{
+                    beers.map((beer, index) => (
+                        <li>
+                            {beer.name}
+                        </li>
+                    ))
+                }
+                </ul>
+            </div>
         )
     }
 
