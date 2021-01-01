@@ -1,7 +1,21 @@
 import React, {Component} from 'react';
+import S3FileUpload from 'react-s3'
 import hopsDataService from '../../services/hops.service';
 
+import './AddBeer.css';
+
+const creds = require('../../frontCredentials');
+
+const config = {
+    bucketName: creds.bucketName,
+    dirName: creds.dirName,
+    accessKeyId: creds.accessKey,
+    secretAccessKey: creds.secretKey,
+    region: 'eu-west-1',
+}
+
 class AddBeer extends Component {
+
     constructor(props) {
         super(props);
         this.onChangeName = this.onChangeName.bind(this);
@@ -11,6 +25,7 @@ class AddBeer extends Component {
         this.onChangeAlcPer = this.onChangeAlcPer.bind(this);
         this.onChangeCountry = this.onChangeCountry.bind(this);
         this.onChangeContainer = this.onChangeContainer.bind(this);
+        this.onChangeImageS3upload = this.onChangeImageS3upload.bind(this);
         this.saveBeer = this.saveBeer.bind(this);
         
         this.state = {
@@ -22,9 +37,12 @@ class AddBeer extends Component {
             alcPer: "",
             country: "",
             container: "",
+            image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
 
             submitted: false
         };
+
+        
     }
 
     onChangeName(e) {
@@ -69,7 +87,26 @@ class AddBeer extends Component {
         });
     }
 
-    saveBeer() {
+    onChangeImageS3upload(e) {
+        this.setState({
+            image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/beer_loading.gif"
+        })
+        S3FileUpload.uploadFile(e.target.form[7].files[0], config)
+            .then((upload) => {
+                console.log(upload.location)
+                this.setState({
+                    image_url: upload.location,
+                })
+                console.log("URL")
+                console.log(this.state.image_url)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    saveBeer(e) {
+
         let data = {
             name: this.state.name,
             details: this.state.details,
@@ -77,9 +114,12 @@ class AddBeer extends Component {
             brewery: this.state.brewery,
             alcPer: this.state.alcPer,
             country: this.state.country,
-            container: this.state.container
+            container: this.state.container,
+            image_url: this.state.image_url
         };
+
         console.log(data)
+
         hopsDataService.create(data)
             .then(response => {
                 this.setState({
@@ -91,15 +131,15 @@ class AddBeer extends Component {
                     alcPer: response.data.alcPer,
                     country: response.data.country,
                     container: response.data.container,
+                    image_url: response.data.image_url,
 
                     submitted: true
                 });
-                console.log(response.data)
             })
             .catch(e => {
                 console.log(e)
             });
-    }
+        }
 
     newBeer() {
         this.setState({
@@ -111,7 +151,7 @@ class AddBeer extends Component {
             alcPer: "",
             country: "",
             container: "",
-
+            image_url: "",
             submitted: false
         });
     }
@@ -122,19 +162,19 @@ class AddBeer extends Component {
                 {this.state.submitted ? (
                     <div>
                         <h4>Beer submitted successfully!</h4>
-                        <button className="btn btn-success" onClick={this.newBeer}>
+                        <button className="btn btn-success" onClick={this.AddBeer}>
                             Add
             </button>
                     </div>
                 ) : (
-                        <div>
+                        <form>
                             <div className="form-group">
                                 <label htmlFor="name">Beer Name</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="name"
-                                    required
+                                    
                                     value={this.state.name}
                                     onChange={this.onChangeName}
                                     name="name"
@@ -147,7 +187,7 @@ class AddBeer extends Component {
                                     type="text"
                                     className="form-control"
                                     id="details"
-                                    required
+                                    
                                     value={this.state.details}
                                     onChange={this.onChangeDetails}
                                     name="details"
@@ -160,7 +200,7 @@ class AddBeer extends Component {
                                     type="text"
                                     className="form-control"
                                     id="beerType"
-                                    required
+                                    
                                     value={this.state.beerType}
                                     onChange={this.onChangeBeerType}
                                     name="beerType"
@@ -173,7 +213,7 @@ class AddBeer extends Component {
                                     type="text"
                                     className="form-control"
                                     id="brewery"
-                                    required
+                                    
                                     value={this.state.brewery}
                                     onChange={this.onChangeBrewery}
                                     name="brewery"
@@ -186,7 +226,7 @@ class AddBeer extends Component {
                                     type="text"
                                     className="form-control"
                                     id="alcPer"
-                                    required
+                                    
                                     value={this.state.alcPer}
                                     onChange={this.onChangeAlcPer}
                                     name="alcPer"
@@ -199,7 +239,7 @@ class AddBeer extends Component {
                                     type="text"
                                     className="form-control"
                                     id="country"
-                                    required
+                                    
                                     value={this.state.country}
                                     onChange={this.onChangeCountry}
                                     name="country"
@@ -212,17 +252,35 @@ class AddBeer extends Component {
                                     type="text"
                                     className="form-control"
                                     id="container"
-                                    required
+                                    
                                     value={this.state.container}
                                     onChange={this.onChangeContainer}
                                     name="container"
                                 />
                             </div>
 
-                            <button onClick={this.saveBeer}>
+                            <div>
+                                <img className="beerImage" src={this.state.image_url} alt="Beer Placeholder"></img>
+                                <label htmlFor="image">Image</label>
+                                <input
+                                    onChange={this.onChangeImageS3upload}
+                                    type="file"
+                                    className="form-control"
+                                    id="image"
+                                    name="image"
+                                    accept="image/*" 
+                                    capture="camera"
+                                    required
+                                />
+                            </div>
+
+                            <button 
+                            onClick={() => {
+                                this.saveBeer();
+                            }}>
                                 Submit
-            </button>
-                        </div>
+                            </button>
+                        </form>
                     )}
             </div>
         );
