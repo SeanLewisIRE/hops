@@ -27,6 +27,7 @@ class AddBeer extends Component {
         this.onChangeContainer = this.onChangeContainer.bind(this);
         this.onChangeImageS3upload = this.onChangeImageS3upload.bind(this);
         this.saveBeer = this.saveBeer.bind(this);
+        this.newBeer = this.newBeer.bind(this);
         
         this.state = {
             id: null,
@@ -97,8 +98,7 @@ class AddBeer extends Component {
                 this.setState({
                     image_url: upload.location,
                 })
-                console.log("URL")
-                console.log(this.state.image_url)
+
             })
             .catch((err) => {
                 console.log(err)
@@ -106,6 +106,7 @@ class AddBeer extends Component {
     }
 
     saveBeer(e) {
+        e.preventDefault();
 
         let data = {
             name: this.state.name,
@@ -118,28 +119,19 @@ class AddBeer extends Component {
             image_url: this.state.image_url
         };
 
-        console.log(data)
-
-        hopsDataService.create(data)
-            .then(response => {
-                this.setState({
-                    id: response.data.id,
-                    name: response.data.name,
-                    details: response.data.details,
-                    beerType: response.data.beerType,
-                    brewery: response.data.brewery,
-                    alcPer: response.data.alcPer,
-                    country: response.data.country,
-                    container: response.data.container,
-                    image_url: response.data.image_url,
-
-                    submitted: true
-                });
-            })
-            .catch(e => {
-                console.log(e)
+        const postPromise = new Promise((resolve, reject) => {
+           hopsDataService.create(data)
+           resolve()
+        })
+        postPromise.then(() => {            
+            this.setState({
+                submitted: true
             });
-        }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
 
     newBeer() {
         this.setState({
@@ -151,7 +143,8 @@ class AddBeer extends Component {
             alcPer: "",
             country: "",
             container: "",
-            image_url: "",
+            image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
+
             submitted: false
         });
     }
@@ -162,125 +155,125 @@ class AddBeer extends Component {
                 {this.state.submitted ? (
                     <div>
                         <h4>Beer submitted successfully!</h4>
-                        <button className="btn btn-success" onClick={this.AddBeer}>
+                        <button className="btn btn-success" onClick={this.newBeer}>
                             Add
-            </button>
+                        </button>
                     </div>
                 ) : (
-                        <form>
-                            <div className="form-group">
-                                <label htmlFor="name">Beer Name</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="name"
-                                    
-                                    value={this.state.name}
-                                    onChange={this.onChangeName}
-                                    name="name"
-                                />
-                            </div>
+                    
+                    <form onSubmit={this.saveBeer}>
+                        <div className="form-group">
+                            <label htmlFor="name">Beer Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="name"
+                                
+                                value={this.state.name}
+                                onChange={this.onChangeName}
+                                name="name"
+                            />
+                        </div>
 
-                            <div className="form-group">
-                                <label htmlFor="description">Details</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="details"
-                                    
-                                    value={this.state.details}
-                                    onChange={this.onChangeDetails}
-                                    name="details"
-                                />
-                            </div>
+                        <div className="form-group">
+                            <label htmlFor="description">Details</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="details"
+                                
+                                value={this.state.details}
+                                onChange={this.onChangeDetails}
+                                name="details"
+                            />
+                        </div>
 
-                            <div className="form-group">
-                                <label htmlFor="description">Beer Type</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="beerType"
-                                    
-                                    value={this.state.beerType}
-                                    onChange={this.onChangeBeerType}
-                                    name="beerType"
-                                />
-                            </div>
+                        <div className="form-group">
+                            <label htmlFor="description">Beer Type</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="beerType"
+                                
+                                value={this.state.beerType}
+                                onChange={this.onChangeBeerType}
+                                name="beerType"
+                            />
+                        </div>
 
-                            <div className="form-group">
-                                <label htmlFor="description">Brewery</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="brewery"
-                                    
-                                    value={this.state.brewery}
-                                    onChange={this.onChangeBrewery}
-                                    name="brewery"
-                                />
-                            </div>
+                        <div className="form-group">
+                            <label htmlFor="description">Brewery</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="brewery"
+                                
+                                value={this.state.brewery}
+                                onChange={this.onChangeBrewery}
+                                name="brewery"
+                            />
+                        </div>
 
-                            <div className="form-group">
-                                <label htmlFor="description">Alcohol Percentage</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="alcPer"
-                                    
-                                    value={this.state.alcPer}
-                                    onChange={this.onChangeAlcPer}
-                                    name="alcPer"
-                                />
-                            </div>
+                        <div className="form-group">
+                            <label htmlFor="description">Alcohol Percentage</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="alcPer"
+                                
+                                value={this.state.alcPer}
+                                onChange={this.onChangeAlcPer}
+                                name="alcPer"
+                            />
+                        </div>
 
-                            <div className="form-group">
-                                <label htmlFor="description">Country</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="country"
-                                    
-                                    value={this.state.country}
-                                    onChange={this.onChangeCountry}
-                                    name="country"
-                                />
-                            </div>
+                        <div className="form-group">
+                            <label htmlFor="description">Country</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="country"
+                                
+                                value={this.state.country}
+                                onChange={this.onChangeCountry}
+                                name="country"
+                            />
+                        </div>
 
-                            <div className="form-group">
-                                <label htmlFor="description">Container</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="container"
-                                    
-                                    value={this.state.container}
-                                    onChange={this.onChangeContainer}
-                                    name="container"
-                                />
-                            </div>
+                        <div className="form-group">
+                            <label htmlFor="description">Container</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="container"
+                                
+                                value={this.state.container}
+                                onChange={this.onChangeContainer}
+                                name="container"
+                            />
+                        </div>
 
-                            <div>
-                                <img className="beerImage" src={this.state.image_url} alt="Beer Placeholder"></img>
-                                <label htmlFor="image">Image</label>
-                                <input
-                                    onChange={this.onChangeImageS3upload}
-                                    type="file"
-                                    className="form-control"
-                                    id="image"
-                                    name="image"
-                                    accept="image/*" 
-                                    capture="camera"
-                                    required
-                                />
-                            </div>
+                        <div>
+                            <img className="beerImage" src={this.state.image_url} alt="Beer Placeholder"></img>
+                            <label htmlFor="image">Image</label>
+                            <input
+                                onChange={this.onChangeImageS3upload}
+                                type="file"
+                                className="form-control"
+                                id="image"
+                                name="image"
+                                accept="image/*" 
+                                capture="camera"
+                                // required
+                            />
+                        </div>
 
-                            <button 
-                            onClick={() => {
-                                this.saveBeer();
-                            }}>
-                                Submit
-                            </button>
-                        </form>
+                        <button 
+                        type="submit"
+                        >
+                            Submit
+                        </button>
+                    </form>
                     )}
             </div>
         );
