@@ -151,22 +151,37 @@ class AddBeer extends Component {
 
     render() {
         return (
-            <div className="submit-form">
+            <div >
                 {this.state.submitted ? (
                     <div>
                         <h4>Beer submitted successfully!</h4>
-                        <button className="btn btn-success" onClick={this.newBeer}>
+                        <button  onClick={this.newBeer}>
                             Add
                         </button>
                     </div>
                 ) : (
                     
                     <form onSubmit={this.saveBeer}>
-                        <div className="form-group">
+
+                        <div>
+                            <img className="beerImage" src={this.state.image_url} alt="Beer Placeholder"></img>
+                            <label htmlFor="image">Image</label>
+                            <input
+                                onChange={this.onChangeImageS3upload}
+                                type="file"
+                                
+                                id="image"
+                                name="image"
+                                accept="image/*"
+                                capture="camera"
+                            // required
+                            />
+                        </div>
+
+                        <div >
                             <label htmlFor="name">Beer Name</label>
                             <input
                                 type="text"
-                                className="form-control"
                                 id="name"
                                 
                                 value={this.state.name}
@@ -175,11 +190,11 @@ class AddBeer extends Component {
                             />
                         </div>
 
-                        <div className="form-group">
+                        <div >
                             <label htmlFor="description">Details</label>
                             <input
                                 type="text"
-                                className="form-control"
+                               
                                 id="details"
                                 
                                 value={this.state.details}
@@ -188,11 +203,10 @@ class AddBeer extends Component {
                             />
                         </div>
 
-                        <div className="form-group">
+                        <div >
                             <label htmlFor="description">Beer Type</label>
                             <input
                                 type="text"
-                                className="form-control"
                                 id="beerType"
                                 
                                 value={this.state.beerType}
@@ -201,11 +215,10 @@ class AddBeer extends Component {
                             />
                         </div>
 
-                        <div className="form-group">
+                        <div >
                             <label htmlFor="description">Brewery</label>
                             <input
                                 type="text"
-                                className="form-control"
                                 id="brewery"
                                 
                                 value={this.state.brewery}
@@ -214,11 +227,11 @@ class AddBeer extends Component {
                             />
                         </div>
 
-                        <div className="form-group">
+                        <div >
                             <label htmlFor="description">Alcohol Percentage</label>
                             <input
                                 type="text"
-                                className="form-control"
+                                
                                 id="alcPer"
                                 
                                 value={this.state.alcPer}
@@ -227,11 +240,10 @@ class AddBeer extends Component {
                             />
                         </div>
 
-                        <div className="form-group">
+                        <div >
                             <label htmlFor="description">Country</label>
                             <input
                                 type="text"
-                                className="form-control"
                                 id="country"
                                 
                                 value={this.state.country}
@@ -240,31 +252,15 @@ class AddBeer extends Component {
                             />
                         </div>
 
-                        <div className="form-group">
+                        <div >
                             <label htmlFor="description">Container</label>
                             <input
                                 type="text"
-                                className="form-control"
                                 id="container"
                                 
                                 value={this.state.container}
                                 onChange={this.onChangeContainer}
                                 name="container"
-                            />
-                        </div>
-
-                        <div>
-                            <img className="beerImage" src={this.state.image_url} alt="Beer Placeholder"></img>
-                            <label htmlFor="image">Image</label>
-                            <input
-                                onChange={this.onChangeImageS3upload}
-                                type="file"
-                                className="form-control"
-                                id="image"
-                                name="image"
-                                accept="image/*" 
-                                capture="camera"
-                                // required
                             />
                         </div>
 

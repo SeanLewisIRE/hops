@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import hopsDataService from '../../services/hops.service';
+import { Link } from 'react-router-dom';
 
 class BeerList extends Component {
     constructor(props) {
@@ -30,17 +31,16 @@ class BeerList extends Component {
 
     render() {
         const {beers} = this.state
-        // const content = beers.map((beer, index) => 
-        //     <div>{beer.name}</div>
-        // );
-        // console.log(content)
         return(
             <div>
                 <h4>Beer List</h4>
                 <ul>{
                     beers.map((beer, index) => (
-                        <li>
+                        <li key={beer.id.toString()}>
                             {beer.name}
+                            <Link key={beer.id.toString()} to={`/BeerDetails/${beer.id}`}>
+                                    Details
+                                </Link>
                         </li>
                     ))
                 }

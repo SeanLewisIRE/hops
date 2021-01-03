@@ -3,6 +3,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 
 import BeerList from './components/BeerList/BeerList'
 import AddBeer from './components/AddBeer/AddBeer'
+import BeerDetails from './components/BeerDetails/BeerDetails';
 
 function App() {
   return (
@@ -11,12 +12,12 @@ function App() {
         <header className="App-header">
         <ul>
           <li>
-              <Link to={"/beerList"} className="nav-link">
+              <Link to={"/BeerList"}>
                 Beer List
                 </Link>
           </li>
           <li>
-              <Link to={"/addBeer"} className="nav-link">
+              <Link to={"/AddBeer"}>
                 Add a Beer
                 </Link>
           </li>
@@ -25,11 +26,11 @@ function App() {
 
       <div>
         <Switch>
-          <Route path="/addBeer">
+          <Route path="/AddBeer">
             <AddBeer />
           </Route>
-          <Route path="/addBeer">
-            <AddBeer />
+          <Route path="/BeerDetails/:id" component={BeerDetails}>
+
           </Route>
           <Route path="/">
             <BeerList />
