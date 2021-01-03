@@ -42,10 +42,12 @@ class BeerDetails extends Component {
     render() {
         const currentBeer = this.state.currentBeer
         return (
-            <div>
-            <h1>Beer Details</h1>
+            <main>
+                <div className="background h-full">
+                <img className="w-screen h-1/5" src={currentBeer.image_url} alt="Beer"/>
+                </div>
             <h1>{currentBeer.name}</h1>
-            </div>
+            </main>
         )
     }
 
