@@ -93,6 +93,7 @@ class AddBeer extends Component {
             image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/beer_loading.gif"
         })
         console.log(e)
+        // form[0] is the loaction of the image upload field in the form. 
         S3FileUpload.uploadFile(e.target.form[0].files[0], config)
             .then((upload) => {
                 console.log(upload.location)
@@ -112,10 +113,10 @@ class AddBeer extends Component {
         let data = {
             name: this.state.name,
             details: this.state.details,
-            beerType: this.state.beerType,
+            beer_type: this.state.beerType,
             brewery: this.state.brewery,
-            alcPer: this.state.alcPer,
-            country: this.state.country,
+            alc_per: this.state.alcPer,
+            country_origin: this.state.country,
             container: this.state.container,
             image_url: this.state.image_url
         };

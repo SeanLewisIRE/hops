@@ -1,4 +1,10 @@
-.background {
-    background-image: url(../../static/images/background.svg);
-    height: 75vh;
+.beer-header {
+    background-image: url(../../static/images/image_base.png);
+    background-size: cover;
+}
+
+.beer-image {
+    height: 400px;
+    width: 100%;
+    background-size: cover;
 }
