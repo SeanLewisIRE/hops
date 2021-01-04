@@ -92,7 +92,8 @@ class AddBeer extends Component {
         this.setState({
             image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/beer_loading.gif"
         })
-        S3FileUpload.uploadFile(e.target.form[7].files[0], config)
+        console.log(e)
+        S3FileUpload.uploadFile(e.target.form[0].files[0], config)
             .then((upload) => {
                 console.log(upload.location)
                 this.setState({

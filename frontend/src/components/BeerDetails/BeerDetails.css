@@ -1,3 +1,4 @@
 .background {
-    background-image: url('../../static/images/background.svg');
+    background-image: url(../../static/images/background.svg);
+    height: 75vh;
 }

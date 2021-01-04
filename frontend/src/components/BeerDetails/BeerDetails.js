@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import hopsDataService from '../../services/hops.service';
-
+import "./BeerDetails.css"
 class BeerDetails extends Component {
     constructor(props) {
         super(props);
@@ -44,9 +44,11 @@ class BeerDetails extends Component {
         return (
             <main>
                 <div className="background h-full">
-                <img className="w-screen h-1/5" src={currentBeer.image_url} alt="Beer"/>
+                <img className="w-screen h-3/4" src={currentBeer.image_url} alt="Beer"/>
+                <h1>{currentBeer.name}</h1>
+                <h2>{currentBeer.brewery}</h2>
                 </div>
-            <h1>{currentBeer.name}</h1>
+            
             </main>
         )
     }
