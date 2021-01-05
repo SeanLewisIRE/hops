@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import S3FileUpload from 'react-s3'
 import hopsDataService from '../../services/hops.service';
 
+import addPhoto from '../../static/icons/addPhoto.svg';
 import './AddBeer.css';
 
 const creds = require('../../frontCredentials');
@@ -157,121 +158,125 @@ class AddBeer extends Component {
                 {this.state.submitted ? (
                     <div>
                         <h4>Beer submitted successfully!</h4>
+                        
                         <button  onClick={this.newBeer}>
                             Add
                         </button>
                     </div>
                 ) : (
+
                     
-                    <form onSubmit={this.saveBeer}>
+                    <div class="mt-5 md:mt-0 md:col-span-2">
+                        <form method="POST" onSubmit={this.saveBeer}>
 
-                        <div>
-                            <img className="beerImage" src={this.state.image_url} alt="Beer Placeholder"></img>
-                            <label htmlFor="image">Image</label>
-                            <input
-                                onChange={this.onChangeImageS3upload}
-                                type="file"
+                            <div>
+                                <img className="beer-image" src={this.state.image_url} alt="Beer Placeholder"></img>
                                 
-                                id="image"
-                                name="image"
-                                accept="image/*"
-                                capture="camera"
-                            // required
-                            />
-                        </div>
+                                <label for="beerImage">
+                                    <img alt="Add beer" src={addPhoto} />
 
-                        <div >
-                            <label htmlFor="name">Beer Name</label>
-                            <input
-                                type="text"
-                                id="name"
-                                
-                                value={this.state.name}
-                                onChange={this.onChangeName}
-                                name="name"
-                            />
-                        </div>
+                                    <input
+                                        className="hidden"
+                                        src={addPhoto}
+                                        onChange={this.onChangeImageS3upload}
+                                        type="file"
+                                        id="image"
+                                        name="beerImage"
+                                        accept="image/*"
+                                        capture="camera"
+                                    // required
+                                    />
+                                </label>
 
-                        <div >
-                            <label htmlFor="description">Details</label>
-                            <input
-                                type="text"
-                               
-                                id="details"
-                                
-                                value={this.state.details}
-                                onChange={this.onChangeDetails}
-                                name="details"
-                            />
-                        </div>
+                            </div>
+                            
 
-                        <div >
-                            <label htmlFor="description">Beer Type</label>
-                            <input
-                                type="text"
-                                id="beerType"
-                                
-                                value={this.state.beerType}
-                                onChange={this.onChangeBeerType}
-                                name="beerType"
-                            />
-                        </div>
+                            <div class="shadow overflow-hidden sm:rounded-md">
+                                <div class="px-4 py-5 bg-white sm:p-6">
+                                   
+                                    <div class="col-span-6">
+                                        <label for="name" class="block text-sm font-medium text-gray-700">Beer Name</label>
+                                        <input type="text" name="name" id="name" autocomplete="Beer Name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        value={this.state.name}
+                                        onChange={this.onChangeName} />
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div >
-                            <label htmlFor="description">Brewery</label>
-                            <input
-                                type="text"
-                                id="brewery"
-                                
-                                value={this.state.brewery}
-                                onChange={this.onChangeBrewery}
-                                name="brewery"
-                            />
-                        </div>
+                            <div class="shadow overflow-hidden sm:rounded-md">
+                                <div class="px-4 py-5 bg-white sm:p-6">
 
-                        <div >
-                            <label htmlFor="description">Alcohol Percentage</label>
-                            <input
-                                type="text"
-                                
-                                id="alcPer"
-                                
-                                value={this.state.alcPer}
-                                onChange={this.onChangeAlcPer}
-                                name="alcPer"
-                            />
-                        </div>
+                                    <div class="col-span-6">
+                                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                                        <input type="text" name="description" id="description" autocomplete="description" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        value={this.state.details}
+                                        onChange={this.onChangeDetails} />
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div >
-                            <label htmlFor="description">Country</label>
-                            <input
-                                type="text"
-                                id="country"
-                                
-                                value={this.state.country}
-                                onChange={this.onChangeCountry}
-                                name="country"
-                            />
-                        </div>
+                            <div class="shadow overflow-hidden sm:rounded-md">
+                                <div class="px-4 py-5 bg-white sm:p-6">
 
-                        <div >
-                            <label htmlFor="description">Container</label>
-                            <input
-                                type="text"
-                                id="container"
-                                
-                                value={this.state.container}
-                                onChange={this.onChangeContainer}
-                                name="container"
-                            />
-                        </div>
+                                    <div class="col-span-6">
+                                        <label for="beerType" class="block text-sm font-medium text-gray-700">Beer Type</label>
+                                        <input type="text" name="beerType" id="beerType" autocomplete="Beer Type" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" 
+                                        value={this.state.beerType}
+                                        onChange={this.onChangeBeerType} />
+                                    </div>
+                                </div>
+                            </div>
 
-                        <button 
-                        type="submit"
-                        >
-                            Submit
-                        </button>
-                    </form>
+                            <div class="shadow overflow-hidden sm:rounded-md">
+                                <div class="px-4 py-5 bg-white sm:p-6">
+
+                                    <div class="col-span-6">
+                                        <label for="brewery" class="block text-sm font-medium text-gray-700">Brewery</label>
+                                        <input type="text" name="brewery" id="brewery" autocomplete="brewery" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" 
+                                        value={this.state.brewery}
+                                        onChange={this.onChangeBrewery}/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="shadow overflow-hidden sm:rounded-md">
+                                <div class="px-4 py-5 bg-white sm:p-6">
+
+                                    <div class="col-span-6">
+                                        <label for="alcPer" class="block text-sm font-medium text-gray-700">Alcohol Percentage</label>
+                                            <input type="text" name="alcPer" id="alcPer" autocomplete="alcPer" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="shadow overflow-hidden sm:rounded-md">
+                                <div class="px-4 py-5 bg-white sm:p-6">
+
+                                    <div class="col-span-6">
+                                        <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+                                        <input type="text" name="country" id="country" autocomplete="country" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" 
+                                        value={this.state.country}
+                                        onChange={this.onChangeCountry}/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="shadow overflow-hidden sm:rounded-md">
+                                <div class="px-4 py-5 bg-white sm:p-6">
+
+                                    <div class="col-span-6">
+                                        <label for="container" class="block text-sm font-medium text-gray-700">Container</label>
+                                        <input type="text" name="container" id="container" autocomplete="container" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" 
+                                        value={this.state.container}
+                                        onChange={this.onChangeContainer}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="mt-1 bg-black text-white block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" >
+                                Add Beer
+                            </button>
+                        </form>
+                    </div>
                     )}
             </div>
         );

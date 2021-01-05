@@ -1,6 +1,11 @@
 import React, { Component } from "react"
 import hopsDataService from '../../services/hops.service';
-import "./BeerDetails.css"
+
+import notesIcon from '../../static/icons/notes.svg';
+import strengthIcon from '../../static/icons/strength.svg';
+import typeIcon from '../../static/icons/type.svg';
+import beerIcon from '../../static/icons/beer.svg';
+import "./BeerDetails.css";
 
 
 class BeerDetails extends Component {
@@ -48,21 +53,36 @@ class BeerDetails extends Component {
                 <img className="beer-image" src={currentBeer.image_url} alt="Beer" />
                 
                 <div className="beer-header h-full container px-5">
-                    <h1>{currentBeer.name}</h1>
-                    <h2>{currentBeer.brewery}</h2>
+                    <h1 className="text-xl pt-4 pb-2 font-black">{currentBeer.name}</h1>
+                    <h2 className="text-base pb-4">{currentBeer.brewery}</h2>
                 </div>
 
                 <div className="container">
-                    <h4>Type</h4>
-                    <p>{currentBeer.beer_type}</p>
-                    <h4>Details</h4>
-                    <p>{currentBeer.details}</p>
-                    <h4>Strength</h4>
-                    <p>{currentBeer.alc_per}%</p>
-                    <h4>Country</h4>
-                    <p>{currentBeer.country_origin}</p>
-                    <h4>Notes</h4>
-                    <p></p>
+                    <div className="pt-4 ml-4">
+                        <img className="inline" alt="Type Icon" src={typeIcon} />
+                        <h4 className="inline text-sm font-bold pl-1">Type</h4>
+                        <p className="text-base ml-4 pt-1">{currentBeer.beer_type}</p>
+                    </div>
+                    <div className="pt-4 ml-4">
+                        <img className="inline" alt="Details Icon" src={beerIcon} />
+                        <h4 className="inline text-sm font-bold pl-1">Details</h4>
+                        <p className="text-base ml-4 pt-1">{currentBeer.details}</p>
+                    </div>
+                    <div className="pt-4 ml-4">
+                        <img className="inline" alt="Strength Icon" src={strengthIcon} />
+                        <h4 className="inline text-sm font-bold pl-1">Strength</h4>
+                        <p className="text-base ml-4 pt-1">{currentBeer.alc_per}%</p>
+                    </div>
+                    <div className="pt-4 ml-4">
+                        <img className="inline" alt="Country Icon" src={beerIcon} />
+                        <h4 className="inline text-sm font-bold pl-1">Country</h4>
+                        <p className="text-base ml-4 pt-1">{currentBeer.country_origin}</p>
+                    </div>
+                    <div className="pt-4 ml-4">
+                        <img className="inline" alt="Notes Icon" src={notesIcon} />
+                        <h4 className="inline text-sm font-bold pl-1">Notes</h4>
+                        <p className="text-base ml-4 pt-1"></p>
+                    </div>
                 </div>     
             </main>
         )
