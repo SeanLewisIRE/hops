@@ -1,7 +1,8 @@
 node_modules
-server/credentials.js
+server/serverCredentials.js
 .env
 frontend/.eslintcache
+frontend/src/frontCredentials.js
 
 
 # dependencies

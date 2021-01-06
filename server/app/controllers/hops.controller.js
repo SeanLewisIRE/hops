@@ -21,7 +21,8 @@ exports.create = (req, res) => {
         brewery: req.body.brewery,
         alc_per: req.body.alc_per,
         country_origin: req.body.country_origin,
-        container: req.body.container
+        container: req.body.container,
+        image_url: req.body.image_url
     };
     // console.log(req)
     // console.log(res)

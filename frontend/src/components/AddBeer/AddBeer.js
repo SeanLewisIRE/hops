@@ -169,26 +169,32 @@ class AddBeer extends Component {
                     <div class="mt-5 md:mt-0 md:col-span-2">
                         <form method="POST" onSubmit={this.saveBeer}>
 
-                            <div>
-                                <img className="beer-image" src={this.state.image_url} alt="Beer Placeholder"></img>
+                            <div className="relative">
+                                <img className="beer-image " src={this.state.image_url} alt="Beer Placeholder"></img>
                                 
-                                <label for="beerImage">
-                                    <img alt="Add beer" src={addPhoto} />
+                                <div class="absolute top-44 flex w-full items-center justify-center ">
+                                    <label class=" flex flex-col items-center tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-white">
+                                            <img src={addPhoto} alt="add icon"/>
+                                        <input
+                                            className="hidden"
+                                            src={addPhoto}
+                                            onChange={this.onChangeImageS3upload}
+                                            type="file"
+                                            id="input-image"
+                                            name="input-Image"
+                                            accept="image/*"
+                                            capture="camera"
+                                            required
+                                        />
+                                    </label>
+                                </div>
+                                    
+                          
+                                    
 
-                                    <input
-                                        className="hidden"
-                                        src={addPhoto}
-                                        onChange={this.onChangeImageS3upload}
-                                        type="file"
-                                        id="image"
-                                        name="beerImage"
-                                        accept="image/*"
-                                        capture="camera"
-                                    // required
-                                    />
-                                </label>
+                            </div> 
 
-                            </div>
+
                             
 
                             <div class="shadow overflow-hidden sm:rounded-md">
@@ -196,7 +202,7 @@ class AddBeer extends Component {
                                    
                                     <div class="col-span-6">
                                         <label for="name" class="block text-sm font-medium text-gray-700">Beer Name</label>
-                                        <input type="text" name="name" id="name" autocomplete="Beer Name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        <input required type="text" name="name" id="name" autocomplete="Beer Name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                         value={this.state.name}
                                         onChange={this.onChangeName} />
                                     </div>

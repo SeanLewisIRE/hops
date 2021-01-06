@@ -20,7 +20,10 @@ module.exports = (sequelize, Sequelize) => {
         },
         container: {
             type: Sequelize.STRING
-        }   
+        },
+        image_url: {
+            type: Sequelize.STRING(500)
+        }
     }, {
         tableName: "beer_master"
     });

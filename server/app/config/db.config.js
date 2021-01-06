@@ -1,4 +1,4 @@
-const creds = require('../../credentials.js')
+const creds = require('../../serverCredentials')
 
 module.exports = {
     DB: `${creds.RDS_DB}`,
