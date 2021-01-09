@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import hopsDataService from '../../services/hops.service';
 
-import notesIcon from '../../static/icons/notes.svg';
+// import notesIcon from '../../static/icons/notes.svg';
 import strengthIcon from '../../static/icons/strength.svg';
 import typeIcon from '../../static/icons/type.svg';
 import beerIcon from '../../static/icons/beer.svg';
@@ -61,28 +61,28 @@ class BeerDetails extends Component {
                     <div className="pt-4 ml-4">
                         <img className="inline" alt="Type Icon" src={typeIcon} />
                         <h4 className="inline text-sm font-bold pl-1">Type</h4>
-                        <p className="text-base ml-4 pt-1">{currentBeer.beer_type}</p>
+                        <p className="text-base pt-1">{currentBeer.beer_type}</p>
                     </div>
                     <div className="pt-4 ml-4">
                         <img className="inline" alt="Details Icon" src={beerIcon} />
                         <h4 className="inline text-sm font-bold pl-1">Details</h4>
-                        <p className="text-base ml-4 pt-1">{currentBeer.details}</p>
+                        <p className="text-base pt-1">{currentBeer.details}</p>
                     </div>
                     <div className="pt-4 ml-4">
                         <img className="inline" alt="Strength Icon" src={strengthIcon} />
                         <h4 className="inline text-sm font-bold pl-1">Strength</h4>
-                        <p className="text-base ml-4 pt-1">{currentBeer.alc_per}%</p>
+                        <p className="text-base pt-1">{currentBeer.alc_per}%</p>
                     </div>
                     <div className="pt-4 ml-4">
                         <img className="inline" alt="Country Icon" src={beerIcon} />
                         <h4 className="inline text-sm font-bold pl-1">Country</h4>
-                        <p className="text-base ml-4 pt-1">{currentBeer.country_origin}</p>
+                        <p className="text-base pt-1">{currentBeer.country_origin}</p>
                     </div>
-                    <div className="pt-4 ml-4">
+                    {/* <div className="pt-4 ml-4">
                         <img className="inline" alt="Notes Icon" src={notesIcon} />
                         <h4 className="inline text-sm font-bold pl-1">Notes</h4>
-                        <p className="text-base ml-4 pt-1"></p>
-                    </div>
+                        <p className="text-base pt-1"></p>
+                    </div> */}
                 </div>     
             </main>
         )

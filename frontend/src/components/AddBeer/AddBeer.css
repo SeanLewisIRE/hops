@@ -3,3 +3,8 @@
     height: 375px;
     width: 100%;
 }
+
+
+.button-background {
+    background-image: url('../../static/images/wavy-button.svg');
+}

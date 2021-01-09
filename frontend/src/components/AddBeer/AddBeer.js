@@ -4,6 +4,11 @@ import hopsDataService from '../../services/hops.service';
 
 import addPhoto from '../../static/icons/addPhoto.svg';
 import './AddBeer.css';
+// import notesIcon from '../../static/icons/notes.svg';
+import strengthIcon from '../../static/icons/strength.svg';
+import typeIcon from '../../static/icons/type.svg';
+import beerIcon from '../../static/icons/beer.svg';
+
 
 const creds = require('../../frontCredentials');
 
@@ -170,7 +175,7 @@ class AddBeer extends Component {
                         <form method="POST" onSubmit={this.saveBeer}>
 
                             <div className="relative">
-                                <img className="beer-image " src={this.state.image_url} alt="Beer Placeholder"></img>
+                                <img className="beer-image" src={this.state.image_url} alt="Beer Placeholder"></img>
                                 
                                 <div class="absolute top-44 flex w-full items-center justify-center ">
                                     <label class=" flex flex-col items-center tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-white">
@@ -184,25 +189,17 @@ class AddBeer extends Component {
                                             name="input-Image"
                                             accept="image/*"
                                             capture="camera"
-                                            required
                                         />
                                     </label>
                                 </div>
-                                    
-                          
-                                    
-
                             </div> 
-
-
-                            
 
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
-                                   
                                     <div class="col-span-6">
-                                        <label for="name" class="block text-sm font-medium text-gray-700">Beer Name</label>
-                                        <input required type="text" name="name" id="name" autocomplete="Beer Name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        <img className="inline" alt="Beer Icon" src={beerIcon} />
+                                        <label for="name" class="inline pl-1 text-xs font-bold tracking-tight">Beer Name</label>
+                                        <input required type="text" name="name" id="name" autocomplete="Beer Name" className="mt-1 focus:solid-indigo-700 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
                                         value={this.state.name}
                                         onChange={this.onChangeName} />
                                     </div>
@@ -211,10 +208,10 @@ class AddBeer extends Component {
 
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
-
                                     <div class="col-span-6">
-                                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                                        <input type="text" name="description" id="description" autocomplete="description" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        <img className="inline" alt="Description Icon" src={beerIcon} />
+                                        <label for="description" class="inline pl-1 text-xs font-bold tracking-tight">Description</label>
+                                        <input type="text" name="description" id="description" autocomplete="description" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
                                         value={this.state.details}
                                         onChange={this.onChangeDetails} />
                                     </div>
@@ -225,8 +222,9 @@ class AddBeer extends Component {
                                 <div class="px-4 py-5 bg-white sm:p-6">
 
                                     <div class="col-span-6">
-                                        <label for="beerType" class="block text-sm font-medium text-gray-700">Beer Type</label>
-                                        <input type="text" name="beerType" id="beerType" autocomplete="Beer Type" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" 
+                                        <img className="inline" alt="Type Icon" src={typeIcon} />
+                                        <label for="beerType" class="inline pl-1 text-xs font-bold tracking-tight">Beer Type</label>
+                                        <input type="text" name="beerType" id="beerType" autocomplete="Beer Type" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
                                         value={this.state.beerType}
                                         onChange={this.onChangeBeerType} />
                                     </div>
@@ -235,10 +233,10 @@ class AddBeer extends Component {
 
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
-
                                     <div class="col-span-6">
-                                        <label for="brewery" class="block text-sm font-medium text-gray-700">Brewery</label>
-                                        <input type="text" name="brewery" id="brewery" autocomplete="brewery" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" 
+                                        <img className="inline" alt="Brewery Icon" src={beerIcon} />
+                                        <label for="brewery" class="inline pl-1 text-xs font-bold tracking-tight">Brewery</label>
+                                        <input type="text" name="brewery" id="brewery" autocomplete="brewery" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
                                         value={this.state.brewery}
                                         onChange={this.onChangeBrewery}/>
                                     </div>
@@ -247,20 +245,20 @@ class AddBeer extends Component {
 
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
-
                                     <div class="col-span-6">
-                                        <label for="alcPer" class="block text-sm font-medium text-gray-700">Alcohol Percentage</label>
-                                            <input type="text" name="alcPer" id="alcPer" autocomplete="alcPer" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                                        <img className="inline" alt="Strength Icon" src={strengthIcon} />
+                                        <label for="alcPer" class="inline pl-1 text-xs font-bold tracking-tight">Alcohol Percentage</label>
+                                        <input type="text" name="alcPer" id="alcPer" autocomplete="alcPer" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" />
                                     </div>
                                 </div>
                             </div>
 
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
-
                                     <div class="col-span-6">
-                                        <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                                        <input type="text" name="country" id="country" autocomplete="country" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" 
+                                        <img className="inline" alt="Country Icon" src={beerIcon} />
+                                        <label for="country" class="inline pl-1 text-xs font-bold tracking-tight">Country</label>
+                                        <input type="text" name="country" id="country" autocomplete="country" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
                                         value={this.state.country}
                                         onChange={this.onChangeCountry}/>
                                     </div>
@@ -269,18 +267,21 @@ class AddBeer extends Component {
 
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
-
                                     <div class="col-span-6">
-                                        <label for="container" class="block text-sm font-medium text-gray-700">Container</label>
-                                        <input type="text" name="container" id="container" autocomplete="container" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" 
+                                        <img className="inline" alt="Container Icon" src={beerIcon} />
+                                        <label for="container" class="inline pl-1 text-xs font-bold tracking-tight">Container</label>
+                                        <input type="text" name="container" id="container" autocomplete="container" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
                                         value={this.state.container}
                                         onChange={this.onChangeContainer}/>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="mt-1 bg-black text-white block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" >
-                                Add Beer
-                            </button>
+
+                                <div className="flex justify-center h-16 w-full button-background content-center"> 
+                                    <button type="submit" class="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
+                                    Add Beer
+                                </button>
+                            </div>
                         </form>
                     </div>
                     )}
