@@ -1,3 +1,25 @@
-.box-shadow {
+/* .box-shadow:nth-child(n) {
+    box-shadow: 4px 4px 1px 0px #FFE600;
+} */
+
+.box-shadow:nth-child(4n-3)  > img {
     box-shadow: 4px 4px 1px 0px #FFE600;
 }
+
+.box-shadow:nth-child(4n-2)  > img {
+    box-shadow: 4px 4px 1px 0px #FDABFF;
+}
+
+.box-shadow:nth-child(4n-1)  > img {
+    box-shadow: 4px 4px 1px 0px #FF70A3;
+}
+
+.box-shadow:nth-child(4n)  > img {
+    box-shadow: 4px 4px 1px 0px #91FFD7;
+}
+
+.box-shadow:nth-child(1) {
+    padding-left: 14px;
+}
+
+    

@@ -3,11 +3,14 @@ import hopsDataService from '../../services/hops.service';
 import { Link } from 'react-router-dom';
 
 import './BeerList.css';
+import randomIcon from '../../static/icons/randomIcon.png'
+import addIcon from '../../static/icons/addIcon.svg'
 
 class BeerList extends Component {
     constructor(props) {
         super(props);
         this.getBeers = this.getBeers.bind(this);
+        
 
         this.state = {
             beers: []
@@ -24,7 +27,6 @@ class BeerList extends Component {
                 this.setState({
                     beers: response.data
                 });
-                console.log(response)
             })
             .catch(e => {
                 console.log(e);
@@ -33,20 +35,49 @@ class BeerList extends Component {
 
     render() {
         const {beers} = this.state
+        
+
+        const randomBeer = () => {
+            function getRandomInt(max) {
+                return Math.floor(Math.random() * Math.floor(max));
+            }
+            const beerIds = []
+            beers.forEach(beer => beerIds.push(beer.id))
+            const numberofBeers = beerIds.length
+            const randomNumber = getRandomInt(numberofBeers)
+
+            return beerIds[randomNumber]
+        }
+
         return(
-            
             <div>
-                <h1>The Beer List</h1>
-                <div className="h-72 flex overflow-x-auto">
-                    {
-                        beers.map((beer, index) => (
-                            <Link className="w-screen h-72 p-1" to={`/BeerDetails/${beer.id}`}>
-                                <img className="box-shadow max-w-none h-44 w-44" alt="Beer" src={beer.image_url}/>
-                                    <h2 className="text-sm">{beer.name}</h2>
-                                    <h4 className="text-xs">{beer.brewery} &#183; {beer.beer_type}</h4>
-                            </Link>
-                        ))
-                    }
+                <main className="flex flex-col justify-between">
+                    {/* Beer List - Copy as required for others */}
+                    <div> 
+                        <h1>The Beer List</h1>
+                        <div className="flex flex-grow overflow-x-auto">
+                            {
+                                beers.map((beer, index) => (
+                                    <Link key={beer.id} className="box-shadow w-screen p-1.5" to={`/BeerDetails/${beer.id}`}>
+                                        <img className="max-w-none h-44 w-44" alt="Beer" src={beer.image_url}/>
+                                        <div className="my-3">
+                                        <h2 className="text-sm font-bold tracking-tight">{beer.name}</h2>
+                                        <h4 className="text-xs font-medium tracking-tight">{beer.brewery} &#183; {beer.beer_type}</h4>
+                                        </div>
+                                    </Link>
+                                ))
+                            }
+                        </div>
+                    </div>                        
+                </main>
+
+                <div className="flex items-center justify-center sticky">
+                    <Link to={`/AddBeer`}>
+                        <img alt="Add Beer Icon" src={addIcon} />
+                    </Link>
+                    <Link to={`/BeerDetails/${randomBeer()}`}>
+                        <img alt="Select Random Beer Icon" src={randomIcon} />
+                    </Link>
                 </div>
             </div>
         )

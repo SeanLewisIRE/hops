@@ -177,8 +177,8 @@ class AddBeer extends Component {
                             <div className="relative">
                                 <img className="beer-image" src={this.state.image_url} alt="Beer Placeholder"></img>
                                 
-                                <div class="absolute top-44 flex w-full items-center justify-center ">
-                                    <label class=" flex flex-col items-center tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-white">
+                                <div class="absolute top-44 flex w-full items-center justify-center">
+                                    <label class="flex flex-col items-center tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-white">
                                             <img src={addPhoto} alt="add icon"/>
                                         <input
                                             className="hidden"

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './NavBar.css'
-import logo from '../../static/images/logo.png'
+import logo from '../../static/images/logo.svg'
 import { useState } from 'react'
 import { Transition } from '@headlessui/react'
 
@@ -9,7 +9,7 @@ import { Transition } from '@headlessui/react'
 function NavBar() { 
     const [isOpen, setIsOpen] = useState(false)
     return (
-        <nav className="navbar container px-5 h-1/4 flex items-center justify-between">
+        <nav className="block navbar container px-5 h-20 flex items-center justify-between">
                 <img className="tems-center" alt="Hops Logo" src={logo} />
                 <div className="tems-center">
                 <div>

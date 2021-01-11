@@ -13,7 +13,6 @@ function App() {
       <div className="App">
         <NavBar/>
 
-      <div>
         <Switch>
           <Route path="/AddBeer">
             <AddBeer />
@@ -24,9 +23,8 @@ function App() {
           <Route path="/">
             <BeerList />
           </Route>
-
         </Switch>
-      </div>
+
       </div>
 
   );
