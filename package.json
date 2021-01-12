@@ -1,35 +1,5 @@
-{
-  "name": "hops",
-  "version": "1.0.0",
-  "description": "Node, Rest API w/Express, Sequelize w/MySQL",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server/build/server.js",
+{  "scripts": {
+    "start": "node server/server.js",
     "heroku-postbuild": "cd server && npm install --only=dev && npm install && npm run build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SeanLewisIRE/hops.git"
-  },
-  "keywords": [
-    "nodejs",
-    "express",
-    "sequelize",
-    "mysql",
-    "rest",
-    "api"
-  ],
-  "author": "Sean Lewis",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/SeanLewisIRE/hops/issues"
-  },
-  "homepage": "https://github.com/SeanLewisIRE/hops#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mysql2": "^2.2.5",
-    "sequelize": "^6.3.5"
   }
 }
