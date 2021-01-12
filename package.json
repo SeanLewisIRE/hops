@@ -1,5 +1,5 @@
 {  "scripts": {
-    "start": "node build/server.js",
+    "start": "node server/build/server.js",
     "heroku-postbuild": "cd server && npm install --only=dev && npm install && npm run build"
   }
 }
