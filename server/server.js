@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-
+const path = require('path');
 
 const corsOptions = {
     origin: 'http://localhost:3306'
@@ -25,10 +25,12 @@ db.sequelize.sync();
 //     console.log("Drop and re-sync db.");
 // });
 
+app.use(express.static(path.join(__dirname, 'server/build')));
+
 // simple route
-app.get("/", (req, res) => {
-    res.json({ message: "Welcome to Hops. The unopinionated beer list" });
-});
+// app.get("/", (req, res) => {
+//     res.json({ message: "Welcome to Hops. The unopinionated beer list" });
+// });
 
 require("./app/routes/hops.routes")(app);
 
