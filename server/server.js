@@ -5,8 +5,15 @@ const cors = require("cors");
 const app = express();
 const path = require('path');
 
-const corsOptions = {
-    origin: 'http://localhost:3306'
+
+if (process.env.LIVE) {
+    const corsOptions = {
+        origin: 'https://hopsfyi.herokuapp.com/'
+    }
+} else {
+    const corsOptions = {
+        origin: 'http://localhost:3306'
+    }
 }
 
 app.use(cors(corsOptions))
