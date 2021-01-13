@@ -5,17 +5,16 @@ const cors = require("cors");
 const app = express();
 const path = require('path');
 
-
-if (process.env.LIVE) {
-    const corsOptions = {
-        origin: 'https://hopsfyi.herokuapp.com/'
-    }
-} else {
-    const corsOptions = {
-        origin: 'http://localhost:3306'
-    }
+const corsOptions = {
+    origin: ''
 }
 
+if (process.env.LIVE) {
+    corsOptions.origin = 'https://hopsfyi.herokuapp.com/'
+} else {
+    corsOptions.origin = 'http://localhost:3306'
+}
+console.log(corsOptions)
 app.use(cors(corsOptions))
 
 // parse requests of content - type - application / json
