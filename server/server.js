@@ -25,7 +25,7 @@ db.sequelize.sync();
 //     console.log("Drop and re-sync db.");
 // });
 
-app.use(express.static(path.join(__dirname, 'server/build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 // simple route
 // app.get("/", (req, res) => {
