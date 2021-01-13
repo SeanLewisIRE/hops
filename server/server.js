@@ -15,7 +15,7 @@ if (process.env.LIVE) {
     corsOptions.origin = 'http://localhost:3306'
 }
 console.log(corsOptions)
-app.use(allowCrossDomain)
+app.use(cors())
 // app.use(cors(corsOptions))
 
 // parse requests of content - type - application / json
