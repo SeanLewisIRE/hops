@@ -15,7 +15,8 @@ if (process.env.LIVE) {
     corsOptions.origin = 'http://localhost:3306'
 }
 console.log(corsOptions)
-app.use(cors(corsOptions))
+app.use(allowCrossDomain)
+// app.use(cors(corsOptions))
 
 // parse requests of content - type - application / json
 app.use(bodyParser.json())
@@ -34,9 +35,9 @@ db.sequelize.sync();
 app.use(express.static(path.join(__dirname, 'build')));
 
 // simple route
-// app.get("/", (req, res) => {
-//     res.json({ message: "Welcome to Hops. The unopinionated beer list" });
-// });
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to Hops. The unopinionated beer list" });
+});
 
 require("./app/routes/hops.routes")(app);
 
