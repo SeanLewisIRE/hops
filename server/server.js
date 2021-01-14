@@ -9,7 +9,7 @@ const db = require("./app/models");
 require("./app/routes/hops.routes")(app);
 
 const corsOptions = {
-    origin: '*'
+    origin: ''
 }
 
 if (process.env.LIVE) {
