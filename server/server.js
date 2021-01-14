@@ -6,14 +6,16 @@ const app = express();
 const path = require('path');
 
 const corsOptions = {
-    origin: ''
+    origin: '*'
 }
 
-if (process.env.LIVE) {
-    corsOptions.origin = 'https://hopsfyi.herokuapp.com/'
-} else {
-    corsOptions.origin = 'http://localhost:3306'
-}
+// if (process.env.LIVE) {
+//     corsOptions.origin = 'https://hopsfyi.herokuapp.com/'
+// } else {
+//     corsOptions.origin = 'http://localhost:3306'
+// }
+
+
 console.log(corsOptions)
 
 app.use(cors(corsOptions))
