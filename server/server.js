@@ -9,14 +9,14 @@ const db = require("./app/models");
 require("./app/routes/hops.routes")(app);
 
 const corsOptions = {
-    origin: '*'
+    origin: ''
 }
 
-// if (process.env.LIVE) {
-//     corsOptions.origin = 'https://hopsfyi.herokuapp.com/'
-// } else {
-//     corsOptions.origin = 'http://localhost:3306'
-// }
+if (process.env.LIVE) {
+    corsOptions.origin = 'https://hopsfyi.herokuapp.com/'
+} else {
+    corsOptions.origin = 'http://localhost:3306'
+}
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(cors(corsOptions))
