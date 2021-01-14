@@ -12,11 +12,11 @@ const corsOptions = {
     origin: ''
 }
 
-if (process.env.LIVE) {
-    corsOptions.origin = 'https://hopsfyi.herokuapp.com/api/*'
-} else {
-    corsOptions.origin = 'http://localhost:3306'
-}
+// if (process.env.LIVE) {
+//     corsOptions.origin = 'http://hopsfyi.herokuapp.com/'
+// } else {
+//     corsOptions.origin = 'http://localhost:3306'
+// }
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(cors(corsOptions))
