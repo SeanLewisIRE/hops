@@ -17,9 +17,8 @@ const corsOptions = {
 // } else {
 //     corsOptions.origin = 'http://localhost:3306'
 // }
-
-app.use(express.static(path.join(__dirname, 'build')));
 app.use(cors(corsOptions))
+app.use(express.static(path.join(__dirname, 'build')));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
