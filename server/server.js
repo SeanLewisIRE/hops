@@ -13,7 +13,7 @@ const corsOptions = {
 }
 
 if (process.env.LIVE) {
-    corsOptions.origin = 'https://hopsfyi.herokuapp.com/'
+    corsOptions.origin = 'https://hopsfyi.herokuapp.com/*'
 } else {
     corsOptions.origin = 'http://localhost:3306'
 }
