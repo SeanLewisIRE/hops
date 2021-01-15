@@ -19,7 +19,7 @@ const corsOptions = {
 // }
 
 app.use(cors())
-app.options('http://hopsfyi.herokuapp.com/', cors());
+app.options('https://hopsfyi.herokuapp.com/', cors());
 
 
 app.use(express.static(path.join(__dirname, 'build')));
