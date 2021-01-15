@@ -57,8 +57,15 @@ class BeerList extends Component {
                         <h1>The Beer List</h1>
                         <div className="flex flex-grow overflow-x-auto">
                             {
-                                console.log(beers)
-
+                                beers.map((beer, index) => (
+                                    <Link key={beer.id} className="box-shadow w-screen p-1.5" to={`/BeerDetails/${beer.id}`}>
+                                        <img className="max-w-none h-44 w-44" alt="Beer" src={beer.image_url}/>
+                                        <div className="my-3">
+                                        <h2 className="text-sm font-bold tracking-tight">{beer.name}</h2>
+                                        <h4 className="text-xs font-medium tracking-tight">{beer.brewery} &#183; {beer.beer_type}</h4>
+                                        </div>
+                                    </Link>
+                                ))
                             }
                         </div>
                     </div>                        
