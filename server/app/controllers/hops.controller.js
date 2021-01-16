@@ -28,7 +28,6 @@ exports.create = (req, res) => {
     // console.log(res)
     console.log(beer)
     
-    // Save Tutorial in the database
     Beer.create(beer)
         .then(data => {
             res.send(data);

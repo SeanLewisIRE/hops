@@ -6,17 +6,19 @@ const app = express();
 const path = require('path');
 
 const db = require("./app/models");
-require("./app/routes/hops.routes")(app);
+
 
 const corsOptions = {
-    origin: 'https://hopsfyi.herokuapp.com/'
+    origin: ''
 }
 
-// if (process.env.LIVE) {
-//     corsOptions.origin = 'http://hopsfyi.herokuapp.com/'
-// } else {
-//     corsOptions.origin = 'http://localhost:3306'
-// }
+if (process.env.LIVE) {
+    corsOptions.origin = 'http://hopsfyi.herokuapp.com//api/beers'
+} else {
+    corsOptions.origin = 'http://localhost:8080'
+}
+
+require("./app/routes/hops.routes")(app);
 
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", corsOptions.origin);
