@@ -13,9 +13,9 @@ const corsOptions = {
 }
 
 if (process.env.LIVE) {
-    corsOptions.origin = 'https://hopsfyi.herokuapp.com//api/beers'
+    corsOptions.origin = 'https://hopsfyi.herokuapp.com/api/beers'
 } else {
-    corsOptions.origin = 'http://localhost:8080'
+    corsOptions.origin = 'http://localhost:8080/api'
 }
 
 require("./app/routes/hops.routes")(app);
