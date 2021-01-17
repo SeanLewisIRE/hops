@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.71d836a7.chunk.css",
-    "main.js": "/static/js/main.5af7e051.chunk.js",
-    "runtime-main.js": "/static/js/runtime-main.d0fce7ff.js",
-    "static/js/2.9a359662.chunk.js": "/static/js/2.9a359662.chunk.js",
-    "static/js/3.45837fb9.chunk.js": "/static/js/3.45837fb9.chunk.js",
+    "main.js": "/static/js/main.8e4b665c.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.cfa84a9c.js",
+    "static/js/2.c7acb14b.chunk.js": "/static/js/2.c7acb14b.chunk.js",
+    "static/js/3.c719585b.chunk.js": "/static/js/3.c719585b.chunk.js",
     "index.html": "/index.html",
-    "static/js/2.9a359662.chunk.js.LICENSE.txt": "/static/js/2.9a359662.chunk.js.LICENSE.txt",
+    "static/js/2.c7acb14b.chunk.js.LICENSE.txt": "/static/js/2.c7acb14b.chunk.js.LICENSE.txt",
     "static/media/addIcon.f87a5a8d.svg": "/static/media/addIcon.f87a5a8d.svg",
     "static/media/addPhoto.986b4b4d.svg": "/static/media/addPhoto.986b4b4d.svg",
     "static/media/beer.3f61985e.svg": "/static/media/beer.3f61985e.svg",
@@ -17,9 +17,9 @@
     "static/media/AddBeer.css": "/static/media/wavy-button.ada651a6.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.d0fce7ff.js",
-    "static/js/2.9a359662.chunk.js",
+    "static/js/runtime-main.cfa84a9c.js",
+    "static/js/2.c7acb14b.chunk.js",
     "static/css/main.71d836a7.chunk.css",
-    "static/js/main.5af7e051.chunk.js"
+    "static/js/main.8e4b665c.chunk.js"
   ]
 }
