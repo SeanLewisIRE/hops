@@ -109,6 +109,7 @@ class AddBeer extends Component {
             image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/beer_loading.gif"
         })
         console.log(e)
+        console.log(config)
         // form[0] is the loaction of the image upload field in the form. 
         S3FileUpload.uploadFile(e.target.form[0].files[0], config)
             .then((upload) => {
