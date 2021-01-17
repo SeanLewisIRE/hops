@@ -23,8 +23,8 @@ import beerIcon from '../../static/icons/beer.svg';
 const config = {
     bucketName: "hops-bucket",
     dirName: "user-images",
-    accessKey: process.env.S3_ACCESS_KEY,
-    secretKey: process.env.S3_SECRET_KEY,
+    accessKey: process.env.REACT_APP_S3_ACCESS_KEY,
+    secretKey: process.env.REACT_APP_S3_SECRET_KEY,
     region: 'eu-west-1',
 }
 
