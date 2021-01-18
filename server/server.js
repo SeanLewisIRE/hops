@@ -12,12 +12,13 @@ const corsOptions = {
     origin: ''
 }
 
-if (process.env.LIVE) {
+if (process.env.REACT_APP_DEPLOY === true) {
     corsOptions.origin = 'https://hopsfyi.herokuapp.com/api/beers'
 } else {
-    corsOptions.origin = 'http://localhost:8080/api'
+    corsOptions.origin = 'http://localhost:3306/api'
 }
 
+app.use(cors());
 require("./app/routes/hops.routes")(app);
 
 app.all('*', function (req, res, next) {
