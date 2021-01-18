@@ -1,4 +1,4 @@
-if (process.env.LIVE) {
+if (process.env.REACT_APP_DEPLOY === true) {
 
     module.exports = {
         DB: process.env.RDS_DB,
