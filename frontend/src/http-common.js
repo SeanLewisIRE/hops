@@ -2,7 +2,7 @@
 import axios from "axios";
 
 function axiosCreate() {
-    if(process.env.REACT_APP_DEPLOY === true) {
+    if(process.env.REACT_APP_DEPLOY === 'true') {
         return axios.create({
             baseURL: "https://hopsfyi.herokuapp.com/api",
             headers: {

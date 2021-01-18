@@ -12,7 +12,7 @@ const corsOptions = {
     origin: ''
 }
 
-if (process.env.REACT_APP_DEPLOY === true) {
+if (process.env.REACT_APP_DEPLOY === 'true') {
     corsOptions.origin = 'https://hopsfyi.herokuapp.com/api/beers'
 } else {
     corsOptions.origin = 'http://localhost:3306/api'
