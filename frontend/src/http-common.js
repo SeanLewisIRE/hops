@@ -4,8 +4,8 @@ require('dotenv').config()
 
 function axiosCreate() {
     console.log("This is AXIOS testing")
-    console.log(process.env.REACT_APP_DEPLOY)
-    if (process.env.REACT_APP_DEPLOY === 'true') {
+    console.log(process.env.NODE_ENV)
+    if (process.env.NODE_ENV === 'development') {
         console.log("live")
         return axios.create({
             baseURL: "https://hopsfyi.herokuapp.com/api",
