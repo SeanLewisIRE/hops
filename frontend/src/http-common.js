@@ -3,6 +3,7 @@ import axios from "axios";
 require('dotenv').config()
 
 function axiosCreate() {
+    console.log("This is AXIOS testing")
     console.log(process.env.REACT_APP_DEPLOY)
     if (process.env.REACT_APP_DEPLOY === 'true') {
         console.log("live")
