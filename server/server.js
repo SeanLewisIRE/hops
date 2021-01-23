@@ -18,6 +18,7 @@ if (process.env.REACT_APP_DEPLOY === 'true') {
     corsOptions.origin = 'http://localhost:3306/api'
 }
 
+app.use(bodyParser.json())
 app.use(cors());
 require("./app/routes/hops.routes")(app);
 
@@ -27,10 +28,7 @@ app.all('*', function (req, res, next) {
     next();
 });
 
-
-
 app.use(express.static(path.join(__dirname, 'build')));
-app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
 db.sequelize.sync();

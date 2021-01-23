@@ -1,12 +1,14 @@
 const db = require("../models");
-// console.log(db)
 const Beer = db.beers;
 const Op = db.Sequelize.Op;
 
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
-    // Validate request
+    console.log("HERE")
+    console.log(req.body)
+
+    // Validate request - This needs to be expanded to ensure duplicate beers/brewerys aren't added
     // if (!req.body.name) {
     //     res.status(400).send({
     //         message: req
