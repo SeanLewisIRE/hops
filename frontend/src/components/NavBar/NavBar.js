@@ -26,7 +26,7 @@ function NavBar() {
                             </button> 
                         :   <button onClick={() => setIsOpen(!isOpen)} className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-haspopup="true">
                                 <span className="sr-only">Open user menu</span>
-                            <img className="h-8 w-8 rounded-full" src='https://static.wikia.nocookie.net/simpsons/images/c/ce/Duff_man.png/revision/latest?cb=20201222215840' alt='Placeholder' />
+                            <img className="h-8 w-8 rounded-full" src='' alt='Placeholder' />
                             </button> 
                     }
                     

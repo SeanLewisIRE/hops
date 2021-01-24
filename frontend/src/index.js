@@ -12,7 +12,7 @@ ReactDOM.render(
     <Auth0Provider
       domain="dev-prmczu8a.eu.auth0.com"
       clientId="rfLvD9f3SwntzxEUBollWQ40xHGx7LtM"
-      redirectUri={window.location.origin}
+      redirectUri="https://localhost:3306/beerlist"
     >
       <BrowserRouter>
         <App className="h-screen"/>

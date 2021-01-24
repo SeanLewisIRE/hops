@@ -1,11 +1,28 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
+const path = require('path');
+const db = require("./app/models");
 
 const app = express();
-const path = require('path');
+app.use(bodyParser.json())
+app.use(cors());
 
-const db = require("./app/models");
+const jwtCheck = jwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: 'https://dev-prmczu8a.eu.auth0.com/.well-known/jwks.json'
+    }),
+    audience: 'http://localhost:8080',
+    issuer: 'https://dev-prmczu8a.eu.auth0.com/',
+    algorithms: ['RS256']
+});
+
+app.use(jwtCheck);
 
 
 const corsOptions = {
@@ -18,8 +35,7 @@ if (process.env.REACT_APP_DEPLOY === 'true') {
     corsOptions.origin = 'http://localhost:3306/api'
 }
 
-app.use(bodyParser.json())
-app.use(cors());
+
 require("./app/routes/hops.routes")(app);
 
 app.all('*', function (req, res, next) {
