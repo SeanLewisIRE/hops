@@ -3,7 +3,7 @@ import hopsDataService from '../../services/hops.service';
 import { Link } from 'react-router-dom';
 
 import './BeerList.css';
-import randomIcon from '../../static/icons/randomIcon.png'
+import randomIcon from '../../static/icons/randomIcon.svg'
 import addIcon from '../../static/icons/addIcon.svg'
 
 class BeerList extends Component {

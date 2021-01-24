@@ -3,13 +3,21 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import App from './App';
+import { Auth0Provider } from "@auth0/auth0-react";
+
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App className="h-screen"/>
-    </BrowserRouter>
+    <Auth0Provider
+      domain="dev-prmczu8a.eu.auth0.com"
+      clientId="rfLvD9f3SwntzxEUBollWQ40xHGx7LtM"
+      redirectUri={window.location.origin}
+    >
+      <BrowserRouter>
+        <App className="h-screen"/>
+      </BrowserRouter>
+    </Auth0Provider>,
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -4,21 +4,32 @@ import './NavBar.css'
 import logo from '../../static/images/logo.svg'
 import { useState } from 'react'
 import { Transition } from '@headlessui/react'
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 function NavBar() { 
+    const { user, isAuthenticated, logout, loginWithRedirect } = useAuth0();
     const [isOpen, setIsOpen] = useState(false)
+
     return (
         <nav className="block navbar container px-5 h-20 flex items-center justify-between">
+                
+            <Link to={"/BeerList"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
                 <img className="tems-center" alt="Hops Logo" src={logo} />
+            </Link>
+                
                 <div className="tems-center">
                 <div>
-                    <button type="button" onClick={() => setIsOpen(!isOpen)} className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="options-menu">
-                            Options
-                        <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fillRule="currentColor" aria-hidden="true">
-                            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                    </button>
+                    {isAuthenticated 
+                        ?  <button onClick={() => setIsOpen(!isOpen)} className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-haspopup="true">
+                                <span className="sr-only">Open user menu</span>
+                                <img className="h-8 w-8 rounded-full" src={user.picture} alt={user.name} />
+                            </button> 
+                        :   <button onClick={() => setIsOpen(!isOpen)} className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-haspopup="true">
+                                <span className="sr-only">Open user menu</span>
+                            <img className="h-8 w-8 rounded-full" src='https://static.wikia.nocookie.net/simpsons/images/c/ce/Duff_man.png/revision/latest?cb=20201222215840' alt='Placeholder' />
+                            </button> 
+                    }
+                    
 
                     <Transition
                         show={isOpen}
@@ -29,15 +40,28 @@ function NavBar() {
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                     >
-                        {(ref) => (
+                        
+                        {isAuthenticated
+                        ?   (ref) => (
                             <div ref={ref} className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                                 <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                    <Link to={"/BeerList"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                                        Beer List
+                                    <Link to={"/profile"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+                                        User Profile
                                     </Link>
-                                    <Link to={"/AddBeer"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                                        Add a Beer
-                                    </Link>
+                                    <button onClick={() => logout({ returnTo: window.location.origin })} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+                                        Logout
+                                    </button>
+                                </div>
+
+                            </div>
+                            )
+                        : (ref) => (
+                            <div ref={ref} className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                                <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                    
+                                    <button onClick={() => loginWithRedirect()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+                                        Logout
+                                    </button>
                                 </div>
                             </div>
                         )}
