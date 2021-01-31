@@ -2,13 +2,24 @@
 module.exports = app => {
     const beers = require('../controllers/hops.controller');
     let router =  require("express").Router();
+    const { auth, requiresAuth } = require('express-openid-connect');
 
-    router.post("/", beers.create);
+    app.get('/login', (req, res) => {
+    });
 
-    router.get("/", beers.findAll);
+    app.get('/status', (req, res) => {
+        res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+    });
 
-    router.get("/:id", beers.findOne);
+    app.get('/profile', requiresAuth(), (req, res) => {
+        res.send(JSON.stringify(req.oidc.user));
+    });
 
+    router.post("/", requiresAuth(), beers.create);
 
-    app.use('/api/beers', router)
+    router.get("/", requiresAuth(), beers.findAll);
+
+    router.get("/:id", requiresAuth(), beers.findOne);
+
+    app.use('/api/beers', requiresAuth(), router)
 }

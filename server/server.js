@@ -1,10 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const jwt = require('express-jwt');
-const jwks = require('jwks-rsa');
 const path = require('path');
 const db = require("./app/models");
+const { auth, requiresAuth } = require('express-openid-connect');
+const serverCredentials = require("./serverCredentials");
 
 const app = express();
 app.use(bodyParser.json())
@@ -28,13 +28,30 @@ app.use(jwtCheck);
 const corsOptions = {
     origin: ''
 }
-
 if (process.env.REACT_APP_DEPLOY === 'true') {
     corsOptions.origin = 'https://hopsfyi.herokuapp.com/api/beers'
 } else {
-    corsOptions.origin = 'http://localhost:3306/api'
+    corsOptions.origin = 'http://localhost:8080/api'
 }
+app.use(cors());
 
+
+const config = {
+    authRequired: false,
+    auth0Logout: true,
+    secret: serverCredentials.AUTH_SECRET,
+    baseURL: 'http://localhost:8080/',
+    clientID: '7synNevGl37rECv6tBS3Hv06mYduRgmL',
+    issuerBaseURL: 'https://dev-prmczu8a.eu.auth0.com'
+};
+
+app.use(auth(config));
+
+// app.all('*', function (req, res) {
+//     res.header("Access-Control-Allow-Origin", corsOptions.origin);
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+// });
 
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", corsOptions.origin);
