@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require('path');
 const db = require("./app/models");
-const { auth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect');
 const serverCredentials = require("./serverCredentials");
 
 const app = express();
@@ -16,7 +16,7 @@ const corsOptions = {
 if (process.env.REACT_APP_DEPLOY === 'true') {
     corsOptions.origin = 'https://hopsfyi.herokuapp.com/api/beers'
 } else {
-    corsOptions.origin = 'http://localhost:3306/api'
+    corsOptions.origin = 'http://localhost:8080/api'
 }
 app.use(cors());
 
@@ -25,7 +25,7 @@ const config = {
     authRequired: false,
     auth0Logout: true,
     secret: serverCredentials.AUTH_SECRET,
-    baseURL: 'https://localhost:3306',
+    baseURL: 'http://localhost:8080/',
     clientID: '7synNevGl37rECv6tBS3Hv06mYduRgmL',
     issuerBaseURL: 'https://dev-prmczu8a.eu.auth0.com'
 };
@@ -38,11 +38,7 @@ app.use(auth(config));
 
 // });
 
-app.get('/', (req, res) => {
-    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-});
-
-// require("./app/routes/hops.routes")(app);
+require("./app/routes/hops.routes")(app);
 
 
 
