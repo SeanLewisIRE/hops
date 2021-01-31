@@ -10,14 +10,14 @@ const app = express();
 app.use(bodyParser.json())
 app.use(cors());
 
-const jwtCheck = jwt({
+var jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
         jwksUri: 'https://dev-prmczu8a.eu.auth0.com/.well-known/jwks.json'
     }),
-    audience: 'http://localhost:8080',
+    audience: 'https://hops-api',
     issuer: 'https://dev-prmczu8a.eu.auth0.com/',
     algorithms: ['RS256']
 });
@@ -36,13 +36,13 @@ if (process.env.REACT_APP_DEPLOY === 'true') {
 }
 
 
-require("./app/routes/hops.routes")(app);
-
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", corsOptions.origin);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
+require("./app/routes/hops.routes")(app);
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(bodyParser.urlencoded({ extended: true }));
