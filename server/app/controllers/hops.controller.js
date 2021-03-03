@@ -5,7 +5,6 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
-    console.log("HERE")
     console.log(req.body)
 
     // Validate request - This needs to be expanded to ensure duplicate beers/brewerys aren't added
@@ -44,7 +43,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Beers from the database.
 exports.findAll = (req, res) => {
-
+    console.log("Before findall")
     Beer.findAll()
         .then(data => {
             res.send(data);

@@ -1,55 +1,53 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import hopsDataService from '../../services/hops.service';
-import { Link } from 'react-router-dom';
+import NavBar from '../NavBar/NavBar'
 
+import { Link } from 'react-router-dom';
+// import { useAuth0 } from "@auth0/auth0-react";
 import './BeerList.css';
 import randomIcon from '../../static/icons/randomIcon.svg'
 import addIcon from '../../static/icons/addIcon.svg'
 
-class BeerList extends Component {
-    constructor(props) {
-        super(props);
-        this.getBeers = this.getBeers.bind(this);
-        
 
-        this.state = {
-            beers: []
-        }
-    }
+const BeerList = () => {
 
-    componentDidMount() {
-        this.getBeers();
-    }
+    // const { isAuthenticated } = useAuth0();
 
-    getBeers() {
+
+    const [beers, setBeers] = useState([])
+
+    useEffect(() => {
+        getBeers()
+    }, []);
+
+    const getBeers =() => {
         hopsDataService.getAll()
             .then(response => {
-                this.setState({
-                    beers: response.data
-                });
+                console.log(response)
+                
+                setBeers(response.data);
+                
             })
             .catch(e => {
                 console.log(e);
             });
+    }    
+
+    const randomBeer = () => {
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+        const beerIds = []
+        beers.forEach(beer => beerIds.push(beer.id))
+        const numberofBeers = beerIds.length
+        const randomNumber = getRandomInt(numberofBeers)
+
+        return beerIds[randomNumber]
     }
 
-    render() {
-        const {beers} = this.state
-        
-
-        const randomBeer = () => {
-            function getRandomInt(max) {
-                return Math.floor(Math.random() * Math.floor(max));
-            }
-            const beerIds = []
-            beers.forEach(beer => beerIds.push(beer.id))
-            const numberofBeers = beerIds.length
-            const randomNumber = getRandomInt(numberofBeers)
-
-            return beerIds[randomNumber]
-        }
-
-        return(
+    return(
+        <div>
+            <NavBar />
             <div>
                 <main className="flex flex-col justify-between">
                     {/* Beer List - Copy as required for others */}
@@ -80,9 +78,8 @@ class BeerList extends Component {
                     </Link>
                 </div>
             </div>
+        </div>
         )
-    }
-
 }
 
 export default BeerList;

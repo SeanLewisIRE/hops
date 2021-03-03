@@ -8,6 +8,5 @@ module.exports = app => {
 
     router.get("/:id", beers.findOne);
 
-
     app.use('/api/beers', router)
 }

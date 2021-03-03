@@ -9,15 +9,16 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Auth0Provider
-      domain="dev-prmczu8a.eu.auth0.com"
-      clientId="rfLvD9f3SwntzxEUBollWQ40xHGx7LtM"
-      redirectUri="https://localhost:3306/beerlist"
-    >
-      <BrowserRouter>
-        <App className="h-screen"/>
-      </BrowserRouter>
-    </Auth0Provider>,
+    <BrowserRouter>
+      <Auth0Provider
+        domain="dev-prmczu8a.eu.auth0.com"
+        clientId="TbFns5oLjRMT6xtH9vPJYYD3dBTYtHox"
+        redirectUri="https://localhost:3306/beerlist"
+        audience= "https://hops-api"
+      > 
+          <App className="h-screen"/>   
+      </Auth0Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

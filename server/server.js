@@ -1,27 +1,33 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
+
 const path = require('path');
 const db = require("./app/models");
 
 const app = express();
 app.use(bodyParser.json())
 
-const jwtCheck = jwt({
-    secret: jwks.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: 'https://dev-prmczu8a.eu.auth0.com/.well-known/jwks.json'
-    }),
-    audience: 'https://hops-api',
-    issuer: 'https://dev-prmczu8a.eu.auth0.com/',
-    algorithms: ['RS256']
-});
+// const jwtCheck = jwt({
+//     secret: jwks.expressJwtSecret({
+//         cache: true,
+//         rateLimit: true,
+//         jwksRequestsPerMinute: 5,
+//         jwksUri: 'https://dev-prmczu8a.eu.auth0.com/.well-known/jwks.json'
+//     }),
+//     audience: 'https://hops-api',
+//     issuer: 'https://dev-prmczu8a.eu.auth0.com/',
+//     algorithms: ['RS256']
+// });
 
-app.use(jwtCheck);
+// app.use(jwtCheck);
+
+app.get('/authorized', function (req, res) {
+    res.send('Secured Resource');
+});
 
 
 const corsOptions = {
@@ -31,7 +37,7 @@ const corsOptions = {
 if (process.env.REACT_APP_DEPLOY === 'true') {
     corsOptions.origin = 'https://hopsfyi.herokuapp.com/api/beers'
 } else {
-    corsOptions.origin = 'http://localhost:3306/api'
+    corsOptions.origin = 'https://localhost:3306'
 }
 app.use(cors());
 

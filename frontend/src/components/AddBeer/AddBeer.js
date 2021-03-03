@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import S3FileUpload from 'react-s3'
 import hopsDataService from '../../services/hops.service';
+import NavBar from '../NavBar/NavBar'
 
 import addPhoto from '../../static/icons/addPhoto.svg';
 import './AddBeer.css';
@@ -8,7 +9,6 @@ import './AddBeer.css';
 import strengthIcon from '../../static/icons/strength.svg';
 import typeIcon from '../../static/icons/type.svg';
 import beerIcon from '../../static/icons/beer.svg';
-
 
 // const creds = require('../../frontCredentials');
 
@@ -181,119 +181,121 @@ class AddBeer extends Component {
                     </div>
                 ) : (
 
-                    
-                    <div className="mt-5 md:mt-0 md:col-span-2">
-                        <form method="POST" onSubmit={this.saveBeer}>
+                    <div class="page">
+                        <NavBar />
+                        <div className="mt-5 md:mt-0 md:col-span-2">
+                            <form method="POST" onSubmit={this.saveBeer}>
 
-                            <div className="relative">
-                                <img className="beer-image" src={this.state.image_url} alt="Beer Placeholder"></img>
-                                
-                                <div className="absolute top-44 flex w-full items-center justify-center">
-                                    <label className="flex flex-col items-center tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-white">
-                                            <img src={addPhoto} alt="add icon"/>
-                                        <input
-                                            className="hidden"
-                                            src={addPhoto}
-                                            onChange={this.onChangeImageS3upload}
-                                            type="file"
-                                            id="input-image"
-                                            name="input-Image"
-                                            accept="image/*"
-                                            capture="camera"
-                                        />
-                                    </label>
-                                </div>
-                            </div> 
+                                <div className="relative">
+                                    <img className="beer-image" src={this.state.image_url} alt="Beer Placeholder"></img>
+                                    
+                                    <div className="absolute top-44 flex w-full items-center justify-center">
+                                        <label className="flex flex-col items-center tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-white">
+                                                <img src={addPhoto} alt="add icon"/>
+                                            <input
+                                                className="hidden"
+                                                src={addPhoto}
+                                                onChange={this.onChangeImageS3upload}
+                                                type="file"
+                                                id="input-image"
+                                                name="input-Image"
+                                                accept="image/*"
+                                                capture="camera"
+                                            />
+                                        </label>
+                                    </div>
+                                </div> 
 
-                            <div className="shadow overflow-hidden sm:rounded-md">
-                                <div className="px-4 py-5 bg-white sm:p-6">
-                                    <div className="col-span-6">
-                                        <img className="inline" alt="Beer Icon" src={beerIcon} />
-                                        <label htmlFor="name" className="inline pl-1 text-xs font-bold tracking-tight">Beer Name</label>
-                                        <input required type="text" name="name" id="name" autoComplete="Beer Name" className="mt-1 focus:solid-indigo-700 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
-                                        value={this.state.name}
-                                        onChange={this.onChangeName} />
+                                <div className="shadow overflow-hidden sm:rounded-md">
+                                    <div className="px-4 py-5 bg-white sm:p-6">
+                                        <div className="col-span-6">
+                                            <img className="inline" alt="Beer Icon" src={beerIcon} />
+                                            <label htmlFor="name" className="inline pl-1 text-xs font-bold tracking-tight">Beer Name</label>
+                                            <input required type="text" name="name" id="name" autoComplete="Beer Name" className="mt-1 focus:solid-indigo-700 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
+                                            value={this.state.name}
+                                            onChange={this.onChangeName} />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="shadow overflow-hidden sm:rounded-md">
-                                <div className="px-4 py-5 bg-white sm:p-6">
-                                    <div className="col-span-6">
-                                        <img className="inline" alt="Description Icon" src={beerIcon} />
-                                        <label htmlFor="description" className="inline pl-1 text-xs font-bold tracking-tight">Description</label>
-                                        <input type="text" name="description" id="description" autoComplete="description" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
-                                        value={this.state.details}
-                                        onChange={this.onChangeDetails} />
+                                <div className="shadow overflow-hidden sm:rounded-md">
+                                    <div className="px-4 py-5 bg-white sm:p-6">
+                                        <div className="col-span-6">
+                                            <img className="inline" alt="Description Icon" src={beerIcon} />
+                                            <label htmlFor="description" className="inline pl-1 text-xs font-bold tracking-tight">Description</label>
+                                            <input type="text" name="description" id="description" autoComplete="description" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
+                                            value={this.state.details}
+                                            onChange={this.onChangeDetails} />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="shadow overflow-hidden sm:rounded-md">
-                                <div className="px-4 py-5 bg-white sm:p-6">
+                                <div className="shadow overflow-hidden sm:rounded-md">
+                                    <div className="px-4 py-5 bg-white sm:p-6">
 
-                                    <div className="col-span-6">
-                                        <img className="inline" alt="Type Icon" src={typeIcon} />
-                                        <label htmlFor="beerType" className="inline pl-1 text-xs font-bold tracking-tight">Beer Type</label>
-                                        <input type="text" name="beerType" id="beerType" autoComplete="Beer Type" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
-                                        value={this.state.beerType}
-                                        onChange={this.onChangeBeerType} />
+                                        <div className="col-span-6">
+                                            <img className="inline" alt="Type Icon" src={typeIcon} />
+                                            <label htmlFor="beerType" className="inline pl-1 text-xs font-bold tracking-tight">Beer Type</label>
+                                            <input type="text" name="beerType" id="beerType" autoComplete="Beer Type" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
+                                            value={this.state.beerType}
+                                            onChange={this.onChangeBeerType} />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="shadow overflow-hidden sm:rounded-md">
-                                <div className="px-4 py-5 bg-white sm:p-6">
-                                    <div className="col-span-6">
-                                        <img className="inline" alt="Brewery Icon" src={beerIcon} />
-                                        <label htmlFor="brewery" className="inline pl-1 text-xs font-bold tracking-tight">Brewery</label>
-                                        <input type="text" name="brewery" id="brewery" autoComplete="brewery" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
-                                        value={this.state.brewery}
-                                        onChange={this.onChangeBrewery}/>
+                                <div className="shadow overflow-hidden sm:rounded-md">
+                                    <div className="px-4 py-5 bg-white sm:p-6">
+                                        <div className="col-span-6">
+                                            <img className="inline" alt="Brewery Icon" src={beerIcon} />
+                                            <label htmlFor="brewery" className="inline pl-1 text-xs font-bold tracking-tight">Brewery</label>
+                                            <input type="text" name="brewery" id="brewery" autoComplete="brewery" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
+                                            value={this.state.brewery}
+                                            onChange={this.onChangeBrewery}/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="shadow overflow-hidden sm:rounded-md">
-                                <div className="px-4 py-5 bg-white sm:p-6">
-                                    <div className="col-span-6">
-                                        <img className="inline" alt="Strength Icon" src={strengthIcon} />
-                                        <label htmlFor="alcPer" className="inline pl-1 text-xs font-bold tracking-tight">Alcohol Percentage</label>
-                                        <input type="text" name="alcPer" id="alcPer" autoComplete="alcPer" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" />
+                                <div className="shadow overflow-hidden sm:rounded-md">
+                                    <div className="px-4 py-5 bg-white sm:p-6">
+                                        <div className="col-span-6">
+                                            <img className="inline" alt="Strength Icon" src={strengthIcon} />
+                                            <label htmlFor="alcPer" className="inline pl-1 text-xs font-bold tracking-tight">Alcohol Percentage</label>
+                                            <input type="text" name="alcPer" id="alcPer" autoComplete="alcPer" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="shadow overflow-hidden sm:rounded-md">
-                                <div className="px-4 py-5 bg-white sm:p-6">
-                                    <div className="col-span-6">
-                                        <img className="inline" alt="Country Icon" src={beerIcon} />
-                                        <label htmlFor="country" className="inline pl-1 text-xs font-bold tracking-tight">Country</label>
-                                        <input type="text" name="country" id="country" autoComplete="country" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
-                                        value={this.state.country}
-                                        onChange={this.onChangeCountry}/>
+                                <div className="shadow overflow-hidden sm:rounded-md">
+                                    <div className="px-4 py-5 bg-white sm:p-6">
+                                        <div className="col-span-6">
+                                            <img className="inline" alt="Country Icon" src={beerIcon} />
+                                            <label htmlFor="country" className="inline pl-1 text-xs font-bold tracking-tight">Country</label>
+                                            <input type="text" name="country" id="country" autoComplete="country" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
+                                            value={this.state.country}
+                                            onChange={this.onChangeCountry}/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="shadow overflow-hidden sm:rounded-md">
-                                <div className="px-4 py-5 bg-white sm:p-6">
-                                    <div className="col-span-6">
-                                        <img className="inline" alt="Container Icon" src={beerIcon} />
-                                        <label htmlFor="container" className="inline pl-1 text-xs font-bold tracking-tight">Container</label>
-                                        <input type="text" name="container" id="container" autoComplete="container" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
-                                        value={this.state.container}
-                                        onChange={this.onChangeContainer}/>
+                                <div className="shadow overflow-hidden sm:rounded-md">
+                                    <div className="px-4 py-5 bg-white sm:p-6">
+                                        <div className="col-span-6">
+                                            <img className="inline" alt="Container Icon" src={beerIcon} />
+                                            <label htmlFor="container" className="inline pl-1 text-xs font-bold tracking-tight">Container</label>
+                                            <input type="text" name="container" id="container" autoComplete="container" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
+                                            value={this.state.container}
+                                            onChange={this.onChangeContainer}/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                                <div className="flex justify-center h-16 w-full button-background content-center"> 
-                                    <button type="submit" className="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
-                                    Add Beer
-                                    </button>
-                            </div>
-                        </form>
+                                    <div className="flex justify-center h-16 w-full button-background content-center"> 
+                                        <button type="submit" className="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
+                                        Add Beer
+                                        </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     )}
             </div>
