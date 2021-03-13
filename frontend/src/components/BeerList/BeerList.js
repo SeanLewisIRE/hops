@@ -17,8 +17,6 @@ const BeerList = () => {
 
     const getBeers = async () => {
         const token = await getAccessTokenSilently();
-
-        console.log(token)
         const url = 'http://localhost:8080/api/beers';
         const options = {
             method: 'GET',
@@ -31,8 +29,6 @@ const BeerList = () => {
 
         fetch(url, options)
             .then(response => {
-                console.log(options)
-                console.log(response)
                 response.json()
                     .then((data) => {
                         setBeers(data);
