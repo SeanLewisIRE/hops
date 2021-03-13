@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import hopsDataService from '../../services/hops.service';
+// import hopsDataService from '../../services/hops.service';
 import NavBar from '../NavBar/NavBar'
 
 import { Link } from 'react-router-dom';
-// import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import './BeerList.css';
 import randomIcon from '../../static/icons/randomIcon.svg'
 import addIcon from '../../static/icons/addIcon.svg'
@@ -11,26 +11,37 @@ import addIcon from '../../static/icons/addIcon.svg'
 
 const BeerList = () => {
 
-    // const { isAuthenticated } = useAuth0();
-
+    const { getAccessTokenSilently } = useAuth0();
 
     const [beers, setBeers] = useState([])
 
-    useEffect(() => {
-        getBeers()
-    }, []);
+    const getBeers = async () => {
+        const token = await getAccessTokenSilently();
 
-    const getBeers =() => {
-        hopsDataService.getAll()
+        console.log(token)
+        const url = 'http://localhost:8080/api/beers';
+        const options = {
+            method: 'GET',
+            headers: {
+                "Content-type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                Authorization: `Bearer ${token}`,
+            }
+        }
+
+        fetch(url, options)
             .then(response => {
+                console.log(options)
                 console.log(response)
-                
-                setBeers(response.data);
-                
-            })
-            .catch(e => {
-                console.log(e);
-            });
+                response.json()
+                    .then((data) => {
+                        setBeers(data);
+                }
+            )
+        .catch(e => {
+            console.log(e);
+        });
+        })
     }    
 
     const randomBeer = () => {
@@ -44,6 +55,11 @@ const BeerList = () => {
 
         return beerIds[randomNumber]
     }
+
+    useEffect(() => {
+        getBeers()
+    }, []);
+
 
     return(
         <div>

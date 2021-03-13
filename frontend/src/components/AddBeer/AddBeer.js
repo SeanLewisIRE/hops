@@ -181,7 +181,7 @@ class AddBeer extends Component {
                     </div>
                 ) : (
 
-                    <div class="page">
+                    <div className="page">
                         <NavBar />
                         <div className="mt-5 md:mt-0 md:col-span-2">
                             <form method="POST" onSubmit={this.saveBeer}>

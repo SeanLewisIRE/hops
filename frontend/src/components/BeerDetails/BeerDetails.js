@@ -10,8 +10,7 @@ import "./BeerDetails.css";
 
 
 function BeerDetails(props) {
-    
-    const [currentBeer, setValues] = useState({
+    const [currentBeer, setCurrentBeer] = useState({
                 id: null,
                 name: "",
                 details: "",
@@ -22,23 +21,34 @@ function BeerDetails(props) {
                 container: "",
                 image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
     })
-
+    
     useEffect(() => {
+        const getBeer = (id) => {
+            hopsDataService.get(id)
+                .then(response => {
+                    const {id, name, details, beer_type, brewery, alc_per, country_origin, container, image_url} = response.data
+                    setCurrentBeer(prevState => ({
+                        "id": id,
+                        "name": name,
+                        "details": details,
+                        "beer_type": beer_type,
+                        "brewery": brewery,
+                        "alc_per": alc_per,
+                        "country_origin": country_origin,
+                        "container": container,
+                        "image_url": image_url
+                    }))
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
         getBeer(props.match.params.id)
-    });
+    }, [props.match.params.id]);
 
-    const getBeer = (id) => {
-        hopsDataService.get(id)
-        .then(response => {
-            setValues({
-                ...currentBeer,
-                response})
-        })
-        .catch(e => {
-            console.log(e);
-        });
-    }
-
+    
+    // console.log("here")
+    // console.log(currentBeer)
     return (
         <div className="page">
             <NavBar />

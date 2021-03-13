@@ -7,14 +7,18 @@ import { Auth0Provider } from "@auth0/auth0-react";
 
 import reportWebVitals from './reportWebVitals';
 
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Auth0Provider
-        domain="dev-prmczu8a.eu.auth0.com"
-        clientId="TbFns5oLjRMT6xtH9vPJYYD3dBTYtHox"
+        domain={domain}
+        clientId={clientId}
         redirectUri="https://localhost:3306/beerlist"
-        audience= "https://hops-api"
+        audience={audience}
       > 
           <App className="h-screen"/>   
       </Auth0Provider>

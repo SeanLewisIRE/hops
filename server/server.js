@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -11,24 +13,19 @@ const db = require("./app/models");
 const app = express();
 app.use(bodyParser.json())
 
-// const jwtCheck = jwt({
-//     secret: jwks.expressJwtSecret({
-//         cache: true,
-//         rateLimit: true,
-//         jwksRequestsPerMinute: 5,
-//         jwksUri: 'https://dev-prmczu8a.eu.auth0.com/.well-known/jwks.json'
-//     }),
-//     audience: 'https://hops-api',
-//     issuer: 'https://dev-prmczu8a.eu.auth0.com/',
-//     algorithms: ['RS256']
-// });
-
-// app.use(jwtCheck);
-
-app.get('/authorized', function (req, res) {
-    res.send('Secured Resource');
+const jwtCheck = jwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: 'https://dev-prmczu8a.eu.auth0.com/.well-known/jwks.json'
+    }),
+    audience: 'https://hops-api',
+    issuer: 'https://dev-prmczu8a.eu.auth0.com/',
+    algorithms: ['RS256']
 });
 
+// app.use(jwtCheck);
 
 const corsOptions = {
     origin: ''
@@ -42,7 +39,7 @@ if (process.env.REACT_APP_DEPLOY === 'true') {
 app.use(cors());
 
 
-app.all('*', function (req, res, next) {
+app.all('*', jwtCheck, function (req, res, next) {
     res.header("Access-Control-Allow-Origin", corsOptions.origin);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
