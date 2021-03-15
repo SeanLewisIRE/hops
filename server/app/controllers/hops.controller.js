@@ -26,9 +26,6 @@ exports.create = (req, res) => {
     };
     // console.log(req)
     // console.log(res)
-
-    console.log("HERE SHAZAM")
-    console.log(beer)
     
     Beer.create(beer)
         .then(data => {
@@ -44,7 +41,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Beers from the database.
 exports.findAll = (req, res) => {
-    console.log("Before findall")
+    // console.log("Before findall")
     Beer.findAll()
         .then(data => {
             res.send(data);
