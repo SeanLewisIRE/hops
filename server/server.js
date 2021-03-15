@@ -25,7 +25,6 @@ const jwtCheck = jwt({
     algorithms: ['RS256']
 });
 
-// app.use(jwtCheck);
 
 const corsOptions = {
     origin: ''

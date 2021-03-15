@@ -5,7 +5,6 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
-    console.log(req.body)
 
     // Validate request - This needs to be expanded to ensure duplicate beers/brewerys aren't added
     // if (!req.body.name) {
@@ -27,6 +26,8 @@ exports.create = (req, res) => {
     };
     // console.log(req)
     // console.log(res)
+
+    console.log("HERE SHAZAM")
     console.log(beer)
     
     Beer.create(beer)

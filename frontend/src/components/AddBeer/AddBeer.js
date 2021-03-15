@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import S3FileUpload from 'react-s3'
 import hopsDataService from '../../services/hops.service';
 import NavBar from '../NavBar/NavBar'
@@ -9,6 +9,11 @@ import './AddBeer.css';
 import strengthIcon from '../../static/icons/strength.svg';
 import typeIcon from '../../static/icons/type.svg';
 import beerIcon from '../../static/icons/beer.svg';
+
+import { useAuth0 } from "@auth0/auth0-react";
+
+import axios from 'axios'
+
 
 // const creds = require('../../frontCredentials');
 
@@ -30,82 +35,75 @@ const config = {
 
 
 
-class AddBeer extends Component {
+function AddBeer(props){
 
-    constructor(props) {
-        super(props);
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeDetails = this.onChangeDetails.bind(this);
-        this.onChangeBeerType = this.onChangeBeerType.bind(this);
-        this.onChangeBrewery = this.onChangeBrewery.bind(this);
-        this.onChangeAlcPer = this.onChangeAlcPer.bind(this);
-        this.onChangeCountry = this.onChangeCountry.bind(this);
-        this.onChangeContainer = this.onChangeContainer.bind(this);
-        this.onChangeImageS3upload = this.onChangeImageS3upload.bind(this);
-        this.saveBeer = this.saveBeer.bind(this);
-        this.newBeer = this.newBeer.bind(this);
-        
-        this.state = {
-            id: null,
-            name: "",
-            details: "",
-            beerType: "",
-            brewery: "",
-            alcPer: "",
-            country: "",
-            container: "",
-            image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
+    const { getAccessTokenSilently } = useAuth0();
 
-            submitted: false
-        };
+    const [beer, setBeer] = useState({
+        id: null,
+        name: "",
+        details: "",
+        beerType: "",
+        brewery: "",
+        alcPer: "",
+        country: "",
+        container: "",
+        image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
+        submitted: false
+    })
 
-        
-    }
-
-    onChangeName(e) {
-        this.setState({
+    const onChangeName = (e) => {
+        setBeer({
+            ...beer,
             name: e.target.value
         });
     }
     
-    onChangeDetails(e) {
-        this.setState({
+    const onChangeDetails = (e) => {
+        setBeer({
+            ...beer,
             details: e.target.value
         });
     }
 
-    onChangeBeerType(e) {
-        this.setState({
+    const onChangeBeerType = (e) => {
+        setBeer({
+            ...beer,
             beerType: e.target.value
         });
     }
 
-    onChangeBrewery(e) {
-        this.setState({
+    const onChangeBrewery = (e) => {
+        setBeer({
+            ...beer,
             brewery: e.target.value
         });
     }
 
-    onChangeAlcPer(e) {
-        this.setState({
+    const onChangeAlcPer = (e) => {
+        setBeer({
+            ...beer,
             alcPer: e.target.value
         });
     }
 
-    onChangeCountry(e) {
-        this.setState({
+    const onChangeCountry = (e) => {
+        setBeer({
+            ...beer,
             country: e.target.value
         });
     }
 
-    onChangeContainer(e) {
-        this.setState({
+    const onChangeContainer = (e) => {
+        setBeer({
+            ...beer,
             container: e.target.value
         });
     }
 
-    onChangeImageS3upload(e) {
-        this.setState({
+    const onChangeImageS3upload = (e) => {
+        setBeer({
+            ...beer,
             image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/beer_loading.gif"
         })
         console.log(e)
@@ -124,36 +122,53 @@ class AddBeer extends Component {
             })
     }
 
-    saveBeer(e) {
-        e.preventDefault();
+    const saveBeer = async (e) => {
+
+        const token = await getAccessTokenSilently();
+        const url = 'http://localhost:8080/api/beers';
 
         let data = {
-            name: this.state.name,
-            details: this.state.details,
-            beer_type: this.state.beerType,
-            brewery: this.state.brewery,
-            alc_per: this.state.alcPer,
-            country_origin: this.state.country,
-            container: this.state.container,
-            image_url: this.state.image_url
+            name: beer.name,
+            details: beer.details,
+            beer_type: beer.beerType,
+            brewery: beer.brewery,
+            alc_per: beer.alcPer,
+            country_origin: beer.country,
+            container: beer.container,
+            image_url: beer.image_url
         };
+        
+        const headers = {
+            "Content-type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${token}`,
+        }
 
-        const postPromise = new Promise((resolve, reject) => {
-           hopsDataService.create(data)
-           resolve()
+        axios.post(url, data, {
+            headers: headers
         })
-        postPromise.then(() => {            
-            this.setState({
+        .then(() => {
+            console.log("Whats going on")
+            setBeer({
+                ...beer,
                 submitted: true
             });
         })
-        .catch((err) => {
-            console.log(err)
-        })
+            .catch((err) => {
+                console.log(err)
+            })
+
+        // const postPromise = new Promise((resolve, reject) => {
+        //    hopsDataService.create(data)
+        //    resolve()
+        // })
+        // postPromise
+
     }
 
-    newBeer() {
-        this.setState({
+    const newBeer = () => {
+        setBeer({
+            ...beer, 
             id: null,
             name: "",
             details: "",
@@ -163,19 +178,16 @@ class AddBeer extends Component {
             country: "",
             container: "",
             image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
-
             submitted: false
-        });
+        })
     }
-
-    render() {
         return (
             <div >
-                {this.state.submitted ? (
+                {beer.submitted ? (
                     <div>
                         <h4>Beer submitted successfully!</h4>
-                        
-                        <button  onClick={this.newBeer}>
+                        {/* If they liked it: May you always find a cold one. If not: May you always see it languish in the bargain bin */}
+                        <button  onClick={newBeer}>
                             Add
                         </button>
                     </div>
@@ -184,10 +196,10 @@ class AddBeer extends Component {
                     <div className="page">
                         <NavBar />
                         <div className="mt-5 md:mt-0 md:col-span-2">
-                            <form method="POST" onSubmit={this.saveBeer}>
+                            <form onSubmit={saveBeer}>
 
                                 <div className="relative">
-                                    <img className="beer-image" src={this.state.image_url} alt="Beer Placeholder"></img>
+                                    <img className="beer-image" src={beer.image_url} alt="Beer Placeholder"></img>
                                     
                                     <div className="absolute top-44 flex w-full items-center justify-center">
                                         <label className="flex flex-col items-center tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-white">
@@ -195,7 +207,7 @@ class AddBeer extends Component {
                                             <input
                                                 className="hidden"
                                                 src={addPhoto}
-                                                onChange={this.onChangeImageS3upload}
+                                                onChange={onChangeImageS3upload}
                                                 type="file"
                                                 id="input-image"
                                                 name="input-Image"
@@ -212,8 +224,8 @@ class AddBeer extends Component {
                                             <img className="inline" alt="Beer Icon" src={beerIcon} />
                                             <label htmlFor="name" className="inline pl-1 text-xs font-bold tracking-tight">Beer Name</label>
                                             <input required type="text" name="name" id="name" autoComplete="Beer Name" className="mt-1 focus:solid-indigo-700 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
-                                            value={this.state.name}
-                                            onChange={this.onChangeName} />
+                                            value={beer.name}
+                                            onChange={onChangeName} />
                                         </div>
                                     </div>
                                 </div>
@@ -224,8 +236,8 @@ class AddBeer extends Component {
                                             <img className="inline" alt="Description Icon" src={beerIcon} />
                                             <label htmlFor="description" className="inline pl-1 text-xs font-bold tracking-tight">Description</label>
                                             <input type="text" name="description" id="description" autoComplete="description" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
-                                            value={this.state.details}
-                                            onChange={this.onChangeDetails} />
+                                            value={beer.details}
+                                            onChange={onChangeDetails} />
                                         </div>
                                     </div>
                                 </div>
@@ -237,8 +249,8 @@ class AddBeer extends Component {
                                             <img className="inline" alt="Type Icon" src={typeIcon} />
                                             <label htmlFor="beerType" className="inline pl-1 text-xs font-bold tracking-tight">Beer Type</label>
                                             <input type="text" name="beerType" id="beerType" autoComplete="Beer Type" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
-                                            value={this.state.beerType}
-                                            onChange={this.onChangeBeerType} />
+                                            value={beer.beerType}
+                                            onChange={onChangeBeerType} />
                                         </div>
                                     </div>
                                 </div>
@@ -249,8 +261,8 @@ class AddBeer extends Component {
                                             <img className="inline" alt="Brewery Icon" src={beerIcon} />
                                             <label htmlFor="brewery" className="inline pl-1 text-xs font-bold tracking-tight">Brewery</label>
                                             <input type="text" name="brewery" id="brewery" autoComplete="brewery" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
-                                            value={this.state.brewery}
-                                            onChange={this.onChangeBrewery}/>
+                                            value={beer.brewery}
+                                            onChange={onChangeBrewery}/>
                                         </div>
                                     </div>
                                 </div>
@@ -260,7 +272,9 @@ class AddBeer extends Component {
                                         <div className="col-span-6">
                                             <img className="inline" alt="Strength Icon" src={strengthIcon} />
                                             <label htmlFor="alcPer" className="inline pl-1 text-xs font-bold tracking-tight">Alcohol Percentage</label>
-                                            <input type="text" name="alcPer" id="alcPer" autoComplete="alcPer" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" />
+                                            <input type="text" name="alcPer" id="alcPer" autoComplete="alcPer" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
+                                            value={beer.alcPer}
+                                            onChange={onChangeAlcPer} />
                                         </div>
                                     </div>
                                 </div>
@@ -271,8 +285,8 @@ class AddBeer extends Component {
                                             <img className="inline" alt="Country Icon" src={beerIcon} />
                                             <label htmlFor="country" className="inline pl-1 text-xs font-bold tracking-tight">Country</label>
                                             <input type="text" name="country" id="country" autoComplete="country" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
-                                            value={this.state.country}
-                                            onChange={this.onChangeCountry}/>
+                                            value={beer.country}
+                                            onChange={onChangeCountry}/>
                                         </div>
                                     </div>
                                 </div>
@@ -283,8 +297,8 @@ class AddBeer extends Component {
                                             <img className="inline" alt="Container Icon" src={beerIcon} />
                                             <label htmlFor="container" className="inline pl-1 text-xs font-bold tracking-tight">Container</label>
                                             <input type="text" name="container" id="container" autoComplete="container" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500" 
-                                            value={this.state.container}
-                                            onChange={this.onChangeContainer}/>
+                                            value={beer.container}
+                                            onChange={onChangeContainer}/>
                                         </div>
                                     </div>
                                 </div>
@@ -300,7 +314,6 @@ class AddBeer extends Component {
                     )}
             </div>
         );
-    }
 }
 
 export default AddBeer;

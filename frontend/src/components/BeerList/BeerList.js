@@ -12,8 +12,12 @@ import addIcon from '../../static/icons/addIcon.svg'
 const BeerList = () => {
 
     const { getAccessTokenSilently } = useAuth0();
-
     const [beers, setBeers] = useState([])
+
+
+    useEffect(() => {
+        getBeers()
+    }, []);
 
     const getBeers = async () => {
         const token = await getAccessTokenSilently();
@@ -51,10 +55,6 @@ const BeerList = () => {
 
         return beerIds[randomNumber]
     }
-
-    useEffect(() => {
-        getBeers()
-    }, []);
 
 
     return(

@@ -27,6 +27,5 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         tableName: "beer_master"
     });
-
     return Beer;
 };
