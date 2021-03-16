@@ -23,6 +23,12 @@ module.exports = (sequelize, Sequelize) => {
         },
         image_url: {
             type: Sequelize.STRING(500)
+        },
+        added_by: {
+            type: Sequelize.STRING
+        },
+        liked_by: {
+            type: Sequelize.STRING
         }
     }, {
         tableName: "beer_master"

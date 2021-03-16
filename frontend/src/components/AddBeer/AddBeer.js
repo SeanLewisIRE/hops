@@ -37,7 +37,7 @@ const config = {
 
 function AddBeer(props){
 
-    const { getAccessTokenSilently } = useAuth0();
+    const { getAccessTokenSilently, user } = useAuth0();
 
     const [beer, setBeer] = useState({
         id: null,
@@ -49,6 +49,7 @@ function AddBeer(props){
         country: "",
         container: "",
         image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
+        added_by: "",
         submitted: false
     })
 
@@ -135,7 +136,8 @@ function AddBeer(props){
             alc_per: beer.alcPer,
             country_origin: beer.country,
             container: beer.container,
-            image_url: beer.image_url
+            image_url: beer.image_url,
+            added_by: user.sub,
         };
         
         const headers = {
@@ -148,7 +150,6 @@ function AddBeer(props){
             headers: headers
         })
         .then(() => {
-            console.log("Whats going on")
             setBeer({
                 ...beer,
                 submitted: true

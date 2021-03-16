@@ -22,7 +22,9 @@ exports.create = (req, res) => {
         alc_per: req.body.alc_per,
         country_origin: req.body.country_origin,
         container: req.body.container,
-        image_url: req.body.image_url
+        image_url: req.body.image_url,
+        added_by: req.body.added_by,
+        liked_by: req.body.liked_by
     };
     // console.log(req)
     // console.log(res)
