@@ -4,8 +4,6 @@ import NavBar from "../NavBar/NavBar"
 
 const ProfilePage = () => {
     const { user } = useAuth0();
-    console.log(user)
-    console.log(user.sub)
     return (
             <div>
             <NavBar />

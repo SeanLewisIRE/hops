@@ -14,7 +14,7 @@ const BeerList = () => {
     const { getAccessTokenSilently } = useAuth0();
     const [beers, setBeers] = useState([])
 
-
+    
     useEffect(() => {
         getBeers()
     }, []);

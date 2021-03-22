@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import S3FileUpload from 'react-s3'
-import hopsDataService from '../../services/hops.service';
+// import hopsDataService from '../../services/hops.service';
 import NavBar from '../NavBar/NavBar'
 
 import addPhoto from '../../static/icons/addPhoto.svg';
@@ -14,17 +14,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import axios from 'axios'
 
-
-// const creds = require('../../frontCredentials');
-
-// const config = {
-//     bucketName: creds.bucketName,
-//     dirName: creds.dirName,
-//     accessKeyId: creds.accessKey,
-//     secretAccessKey: creds.secretKey,
-//     region: 'eu-west-1',
-// }
-
 const config = {
     bucketName: "hops-bucket",
     dirName: "user-images",
@@ -32,8 +21,6 @@ const config = {
     secretKey: process.env.REACT_APP_S3_SECRET_KEY,
     region: 'eu-west-1',
 }
-
-
 
 function AddBeer(props){
 
@@ -116,7 +103,6 @@ function AddBeer(props){
                 this.setState({
                     image_url: upload.location,
                 })
-
             })
             .catch((err) => {
                 console.log(err)

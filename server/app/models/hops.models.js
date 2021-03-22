@@ -33,5 +33,31 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         tableName: "beer_master"
     });
-    return Beer;
+
+    const Logged_By = sequelize.define("logged_by", {
+        beer_id: {
+            type: Sequelize.INTEGER
+        },
+        user_id: {
+            type: Sequelize.INTEGER
+        }
+    }, {
+        tableName: "logged_by"
+    });
+
+    const User_Comments = sequelize.define("user_comment", {
+        beer_id: {
+            type: Sequelize.INTEGER
+        },
+        user_id: {
+            type: Sequelize.INTEGER
+        },
+        comment: {
+            type: Sequelize.STRING(500)
+        }
+    }, {
+        tableName: "user_comments"
+    });
+
+    return {Beer, Logged_By, User_Comments};
 };

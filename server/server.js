@@ -50,11 +50,6 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 db.sequelize.sync();
-// db.sequelize.sync({ force: true }).then(() => {
-//     console.log("Drop and re-sync db.");
-// });
-
-
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

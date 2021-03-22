@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import hopsDataService from '../../services/hops.service';
+// import hopsDataService from '../../services/hops.service';
 import NavBar from '../NavBar/NavBar'
 
 // import notesIcon from '../../static/icons/notes.svg';
@@ -8,8 +8,13 @@ import typeIcon from '../../static/icons/type.svg';
 import beerIcon from '../../static/icons/beer.svg';
 import "./BeerDetails.css";
 
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 function BeerDetails(props) {
+
+    const { getAccessTokenSilently } = useAuth0();
+
     const [currentBeer, setCurrentBeer] = useState({
                 id: null,
                 name: "",
@@ -22,26 +27,63 @@ function BeerDetails(props) {
                 image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
     })
     
+
+
+
     useEffect(() => {
-        const getBeer = (id) => {
-            hopsDataService.get(id)
+        const getBeer = async (id) => {
+            const token = await getAccessTokenSilently();
+            const url = `http://localhost:8080/api/beers/${id}`;
+            const options = {
+                method: 'GET',
+                headers: {
+                    "Content-type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    Authorization: `Bearer ${token}`,
+                }
+            }
+
+            fetch(url, options)
                 .then(response => {
-                    const {id, name, details, beer_type, brewery, alc_per, country_origin, container, image_url} = response.data
-                    setCurrentBeer(prevState => ({
-                        "id": id,
-                        "name": name,
-                        "details": details,
-                        "beer_type": beer_type,
-                        "brewery": brewery,
-                        "alc_per": alc_per,
-                        "country_origin": country_origin,
-                        "container": container,
-                        "image_url": image_url
-                    }))
+                    response.json()
+                        .then(response => {
+                            const { id, name, details, beer_type, brewery, alc_per, country_origin, container, image_url } = response
+                            setCurrentBeer({
+                                "id": id,
+                                "name": name,
+                                "details": details,
+                                "beer_type": beer_type,
+                                "brewery": brewery,
+                                "alc_per": alc_per,
+                                "country_origin": country_origin,
+                                "container": container,
+                                "image_url": image_url
+                            })
+                        })
+                        .catch(e => {
+                            console.log(e);
+                        });
                 })
-                .catch(e => {
-                    console.log(e);
-                });
+
+
+            // hopsDataService.get(id)
+            //     .then(response => {
+            //         const {id, name, details, beer_type, brewery, alc_per, country_origin, container, image_url} = response.data
+            //         setCurrentBeer(prevState => ({
+            //             "id": id,
+            //             "name": name,
+            //             "details": details,
+            //             "beer_type": beer_type,
+            //             "brewery": brewery,
+            //             "alc_per": alc_per,
+            //             "country_origin": country_origin,
+            //             "container": container,
+            //             "image_url": image_url
+            //         }))
+            //     })
+            //     .catch(e => {
+            //         console.log(e);
+            //     });
         }
         getBeer(props.match.params.id)
     }, [props.match.params.id]);

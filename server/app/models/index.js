@@ -22,6 +22,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.beers = require("./hops.models.js")(sequelize, Sequelize);
-
+db.models = require("./hops.models.js")(sequelize, Sequelize);
+// console.log(db)
 module.exports = db;

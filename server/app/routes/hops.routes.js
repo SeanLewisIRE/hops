@@ -4,7 +4,9 @@ module.exports = app => {
 
     router.post("/", beers.create);
 
-    router.get("/", beers.findAll);
+    // router.get("/", beers.findAll);
+
+    router.get("/", beers.findAllFromUser);
 
     router.get("/:id", beers.findOne);
 

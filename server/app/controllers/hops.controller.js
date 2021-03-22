@@ -1,6 +1,10 @@
 const db = require("../models");
-const Beer = db.beers;
-const Op = db.Sequelize.Op;
+
+const Beer = db.models["Beer"];
+const Logged_By = db.models["Logged_By"];
+const User_Comments = db.models["User_Comments"];
+
+// const Op = db.Sequelize.Op;
 
 
 // Create and Save a new Tutorial
@@ -51,7 +55,20 @@ exports.findAll = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving tutorials."
+                    err.message || "Some error occurred while retrieving beers."
+            });
+        });
+};
+
+exports.findAllFromUser = (req, res) => {
+    Beer.findAll({ where: {added_by: req.user.sub}})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving user beers."
             });
         });
 };
@@ -59,7 +76,6 @@ exports.findAll = (req, res) => {
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
-
     Beer.findByPk(id)
         .then(data => {
             res.send(data);
@@ -87,6 +103,3 @@ exports.deleteAll = (req, res) => {
 };
 
 // Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-
-};
