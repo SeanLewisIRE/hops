@@ -4,7 +4,7 @@ const Beer = db.models["Beer"];
 const Logged_By = db.models["Logged_By"];
 const User_Comments = db.models["User_Comments"];
 
-// const Op = db.Sequelize.Op;
+const Op = db.Sequelize.Op;
 
 
 // Create and Save a new Tutorial
@@ -26,18 +26,26 @@ exports.create = (req, res) => {
         alc_per: req.body.alc_per,
         country_origin: req.body.country_origin,
         container: req.body.container,
+        user_comment: req.body.user_comment,
         image_url: req.body.image_url,
         added_by: req.body.added_by,
         liked_by: req.body.liked_by
     };
     // console.log(req)
     // console.log(res)
-    
+
     Beer.create(beer)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
+        .then((result) => {
+            Logged_By.create({
+                beer_id: result.dataValues.id,
+                user_id: req.body.added_by,
+            })
+            User_Comments.create({
+                beer_id: result.dataValues.id,
+                user_id: req.body.added_by,
+                comment: req.body.user_comment
+            })
+        }).catch(err => {
             res.status(500).send({
                 message:
                     err.message || "An error occurred while adding the beer."
@@ -47,7 +55,6 @@ exports.create = (req, res) => {
 
 // Retrieve all Beers from the database.
 exports.findAll = (req, res) => {
-    // console.log("Before findall")
     Beer.findAll()
         .then(data => {
             res.send(data);
@@ -86,6 +93,25 @@ exports.findOne = (req, res) => {
             });
         });
 };
+
+exports.findByName = (req, res) => {
+    // console.log(req.params.name)
+    console.log("here$$$$$$$$$$$$")
+    const name = req.params.name;
+
+    Beer.findAll({ where: { name: {
+        [Op.substring]: name
+    }}})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving user beers."
+            });
+        });
+}
 
 // Update a Tutorial by the id in the request
 exports.update = (req, res) => {

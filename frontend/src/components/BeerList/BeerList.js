@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import hopsDataService from '../../services/hops.service';
 import NavBar from '../NavBar/NavBar'
-
 import { Link } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import './BeerList.css';
@@ -82,7 +81,7 @@ const BeerList = () => {
                 </main>
 
                 <div className="flex items-center justify-center sticky">
-                    <Link to={`/AddBeer`}>
+                    <Link to={`/search`}>
                         <img alt="Add Beer Icon" src={addIcon} />
                     </Link>
                     <Link to={`/BeerDetails/${randomBeer()}`}>

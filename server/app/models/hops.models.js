@@ -39,7 +39,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         user_id: {
-            type: Sequelize.INTEGER
+            type: Sequelize.STRING
         }
     }, {
         tableName: "logged_by"
@@ -50,7 +50,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         user_id: {
-            type: Sequelize.INTEGER
+            type: Sequelize.STRING
         },
         comment: {
             type: Sequelize.STRING(500)

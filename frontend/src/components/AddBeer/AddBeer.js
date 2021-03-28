@@ -5,7 +5,7 @@ import NavBar from '../NavBar/NavBar'
 
 import addPhoto from '../../static/icons/addPhoto.svg';
 import './AddBeer.css';
-// import notesIcon from '../../static/icons/notes.svg';
+import notesIcon from '../../static/icons/notes.svg';
 import strengthIcon from '../../static/icons/strength.svg';
 import typeIcon from '../../static/icons/type.svg';
 import beerIcon from '../../static/icons/beer.svg';
@@ -35,6 +35,7 @@ function AddBeer(props){
         alcPer: "",
         country: "",
         container: "",
+        user_comment: "",
         image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
         added_by: "",
         submitted: false
@@ -89,13 +90,19 @@ function AddBeer(props){
         });
     }
 
+    const onChangeComment = (e) => {
+        setBeer({
+            ...beer,
+            user_comment: e.target.value
+        });
+    }
+
     const onChangeImageS3upload = (e) => {
         setBeer({
             ...beer,
             image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/beer_loading.gif"
         })
-        console.log(e)
-        console.log(config)
+
         // form[0] is the loaction of the image upload field in the form. 
         S3FileUpload.uploadFile(e.target.form[0].files[0], config)
             .then((upload) => {
@@ -122,6 +129,7 @@ function AddBeer(props){
             alc_per: beer.alcPer,
             country_origin: beer.country,
             container: beer.container,
+            user_comment: beer.user_comment,
             image_url: beer.image_url,
             added_by: user.sub,
         };
@@ -164,6 +172,7 @@ function AddBeer(props){
             alcPer: "",
             country: "",
             container: "",
+            user_comment: "",
             image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
             submitted: false
         })
@@ -290,10 +299,22 @@ function AddBeer(props){
                                     </div>
                                 </div>
 
-                                    <div className="flex justify-center h-16 w-full button-background content-center"> 
-                                        <button type="submit" className="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
-                                        Add Beer
-                                        </button>
+                                <div className="shadow overflow-hidden sm:rounded-md">
+                                    <div className="px-4 py-5 bg-white sm:p-6">
+                                        <div className="col-span-6">
+                                            <img className="inline" alt="Notes Icon" src={notesIcon} />
+                                            <label htmlFor="user_comment" className="inline pl-1 text-xs font-bold tracking-tight">Comments</label>
+                                                <input type="text" name="user_comment" id="user_comment" autoComplete="user_comment" className="mt-1 h-16 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
+                                                value={beer.user_comment}
+                                                onChange={onChangeComment} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-center h-16 w-full button-background content-center"> 
+                                    <button type="submit" className="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
+                                    Add Beer
+                                    </button>
                                 </div>
                             </form>
                         </div>

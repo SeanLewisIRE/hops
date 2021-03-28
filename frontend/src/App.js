@@ -7,6 +7,7 @@ import AddBeer from './components/AddBeer/AddBeer'
 import BeerDetails from './components/BeerDetails/BeerDetails';
 import LoginPage from './components/LoginPage/LoginPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
+import SearchBeer from './components/SearchBeer/SearchBeer';
 import Loading from './components/Loading/Loading'
 //Auth
 import ProtectedRoute from "./auth/ProtectedRoute";
@@ -37,6 +38,8 @@ const App = () => {
         <ProtectedRoute path="/profile" component={ProfilePage} />
 
         <ProtectedRoute path="/addbeer" component={AddBeer} />
+
+        <ProtectedRoute path="/search" component={SearchBeer} />
 
         <ProtectedRoute path="/beerdetails/:id" component={(props) => <BeerDetails {...props}/>} />
 
