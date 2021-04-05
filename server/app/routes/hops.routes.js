@@ -4,6 +4,8 @@ module.exports = app => {
 
     router.post("/", beers.create);
 
+    router.post("/", beers.addUserComment);
+
     router.get("/", beers.findAll);
 
     router.get("/", beers.findAllFromUser);

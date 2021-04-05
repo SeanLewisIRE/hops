@@ -6,29 +6,26 @@ import notesIcon from '../../static/icons/notes.svg';
 import strengthIcon from '../../static/icons/strength.svg';
 import typeIcon from '../../static/icons/type.svg';
 import beerIcon from '../../static/icons/beer.svg';
-import "./BeerDetails.css";
+import "./AddComment.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
 
-function BeerDetails(props) {
+function AddComment(props) {
 
-    const { getAccessTokenSilently } = useAuth0();
+    const { getAccessTokenSilently, user } = useAuth0();
 
     const [currentBeer, setCurrentBeer] = useState({
-                id: null,
-                name: "",
-                details: "",
-                beer_type: "",
-                brewery: "",
-                alc_per: "",
-                country_origin: "",
-                container: "",
-                image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
+        id: null,
+        name: "",
+        details: "",
+        beer_type: "",
+        brewery: "",
+        alc_per: "",
+        country_origin: "",
+        container: "",
+        image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
     })
-    
-
-
 
     useEffect(() => {
         const getBeer = async (id) => {
@@ -42,7 +39,6 @@ function BeerDetails(props) {
                     Authorization: `Bearer ${token}`,
                 }
             }
-
             fetch(url, options)
                 .then(response => {
                     response.json()
@@ -64,39 +60,62 @@ function BeerDetails(props) {
                             console.log(e);
                         });
                 })
-
-
-            // hopsDataService.get(id)
-            //     .then(response => {
-            //         const {id, name, details, beer_type, brewery, alc_per, country_origin, container, image_url} = response.data
-            //         setCurrentBeer(prevState => ({
-            //             "id": id,
-            //             "name": name,
-            //             "details": details,
-            //             "beer_type": beer_type,
-            //             "brewery": brewery,
-            //             "alc_per": alc_per,
-            //             "country_origin": country_origin,
-            //             "container": container,
-            //             "image_url": image_url
-            //         }))
-            //     })
-            //     .catch(e => {
-            //         console.log(e);
-            //     });
         }
         getBeer(props.match.params.id)
     }, [props.match.params.id]);
 
-    
-    // console.log("here")
-    // console.log(currentBeer)
+    const [beer, setBeer] = useState({
+        user_comment: ""
+    })    
+
+    const onChangeComment = (e) => {
+        setBeer({
+            ...beer,
+            user_comment: e.target.value
+        });
+    }
+
+    const saveUserComment = async (e) => {
+
+        const token = await getAccessTokenSilently();
+        const url = 'http://localhost:8080/api/beers';
+
+        let data = {
+            beer_id: currentBeer.id,
+            user_id: user.sub,
+            comment: beer.user_comment
+        };
+
+        const options = {
+            method: 'GET',
+            headers: {
+                "Content-type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                Authorization: `Bearer ${token}`,
+            }
+        }
+
+        fetch(url, options)
+            .then(() => {
+                setBeer({
+                    ...beer,
+                    submitted: true
+                });
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+``
+    }
+
     return (
         <div className="page">
+
             <NavBar />
+
             <main>
                 <img className="beer-image" src={currentBeer.image_url} alt="Beer" />
-                
+
                 <div className="beer-header h-full container px-5">
                     <h1 className="text-xl pt-4 pb-2 font-black">{currentBeer.name}</h1>
                     <h2 className="text-base pb-4">{currentBeer.brewery}</h2>
@@ -123,12 +142,28 @@ function BeerDetails(props) {
                         <h4 className="inline text-sm font-bold pl-1">Country</h4>
                         <p className="text-base pt-1">{currentBeer.country_origin}</p>
                     </div>
-                    {/* <div className="pt-4 ml-4">
-                        <img className="inline" alt="Notes Icon" src={notesIcon} />
-                        <h4 className="inline text-sm font-bold pl-1">Notes</h4>
-                        <p className="text-base pt-1"></p>
-                    </div> */}
-                </div>     
+
+                    <form onSubmit={saveUserComment}>
+
+                        <div className="shadow overflow-hidden sm:rounded-md">
+                            <div className="px-4 py-5 bg-white sm:p-6">
+                                <div className="col-span-6">
+                                    <img className="inline" alt="Notes Icon" src={notesIcon} />
+                                    <label htmlFor="user_comment" className="inline pl-1 text-xs font-bold tracking-tight">Comments</label>
+                                    <input type="text" name="user_comment" id="user_comment" autoComplete="user_comment" className="mt-1 h-16 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
+                                        value={beer.user_comment}
+                                        onChange={onChangeComment} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-center h-16 w-full button-background content-center">
+                            <button type="submit" className="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
+                                Penny for your thoughts
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </main>
         </div>
     )
@@ -136,4 +171,4 @@ function BeerDetails(props) {
 
 }
 
-export default BeerDetails;
+export default AddComment;

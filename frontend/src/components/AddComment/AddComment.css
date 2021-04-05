@@ -1,0 +1,9 @@
+.beer-header {
+    background-image: url(../../static/images/image_base.png);
+    background-size: cover;
+}
+
+.beer-image {
+    height: 375px;
+    width: 100%;
+}

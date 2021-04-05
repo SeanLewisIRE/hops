@@ -153,12 +153,6 @@ function AddBeer(props){
                 console.log(err)
             })
 
-        // const postPromise = new Promise((resolve, reject) => {
-        //    hopsDataService.create(data)
-        //    resolve()
-        // })
-        // postPromise
-
     }
 
     const newBeer = () => {

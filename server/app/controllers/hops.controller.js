@@ -53,6 +53,15 @@ exports.create = (req, res) => {
         });
 };
 
+//Retreive beer, fill data, allow comment
+exports.addUserComment = (req, res) => {
+    // User_Comments.create({
+    //     beer_id: result.dataValues.id,
+    //     user_id: req.body.added_by,
+    //     comment: req.body.user_comment
+    // })
+}
+
 // Retrieve all Beers from the database.
 exports.findAll = (req, res) => {
     Beer.findAll()
