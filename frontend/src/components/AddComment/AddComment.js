@@ -64,13 +64,12 @@ function AddComment(props) {
         getBeer(props.match.params.id)
     }, [props.match.params.id]);
 
-    const [beer, setBeer] = useState({
+    const [comment, setComment] = useState({
         user_comment: ""
     })    
 
     const onChangeComment = (e) => {
-        setBeer({
-            ...beer,
+        setComment({
             user_comment: e.target.value
         });
     }
@@ -78,34 +77,32 @@ function AddComment(props) {
     const saveUserComment = async (e) => {
 
         const token = await getAccessTokenSilently();
-        const url = 'http://localhost:8080/api/beers';
+        const url = 'http://localhost:8080/api/beers/addcomment';
 
         let data = {
             beer_id: currentBeer.id,
             user_id: user.sub,
-            comment: beer.user_comment
+            comment: comment.user_comment
         };
 
         const options = {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 "Content-type": "application/json",
                 "Access-Control-Allow-Origin": "*",
                 Authorization: `Bearer ${token}`,
-            }
+                user: user.sub
+            },
+            body: JSON.stringify(data)
         }
 
         fetch(url, options)
-            .then(() => {
-                setBeer({
-                    ...beer,
-                    submitted: true
-                });
+            .then((data) => {
+                console.log(data)
             })
             .catch((err) => {
                 console.log(err)
             })
-``
     }
 
     return (
@@ -151,7 +148,7 @@ function AddComment(props) {
                                     <img className="inline" alt="Notes Icon" src={notesIcon} />
                                     <label htmlFor="user_comment" className="inline pl-1 text-xs font-bold tracking-tight">Comments</label>
                                     <input type="text" name="user_comment" id="user_comment" autoComplete="user_comment" className="mt-1 h-16 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
-                                        value={beer.user_comment}
+                                        value={comment.user_comment}
                                         onChange={onChangeComment} />
                                 </div>
                             </div>

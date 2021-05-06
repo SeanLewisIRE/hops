@@ -10,9 +10,8 @@ import addIcon from '../../static/icons/addIcon.svg'
 
 const BeerList = () => {
 
-    const { getAccessTokenSilently } = useAuth0();
+    const { getAccessTokenSilently, user } = useAuth0();
     const [beers, setBeers] = useState([])
-
     
     useEffect(() => {
         getBeers()
@@ -27,6 +26,7 @@ const BeerList = () => {
                 "Content-type": "application/json",
                 "Access-Control-Allow-Origin": "*",
                 Authorization: `Bearer ${token}`,
+                user: user.sub
             }
         }
 

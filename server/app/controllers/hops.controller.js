@@ -55,11 +55,27 @@ exports.create = (req, res) => {
 
 //Retreive beer, fill data, allow comment
 exports.addUserComment = (req, res) => {
-    // User_Comments.create({
-    //     beer_id: result.dataValues.id,
-    //     user_id: req.body.added_by,
-    //     comment: req.body.user_comment
-    // })
+    User_Comments.create({
+        beer_id: req.body.beer_id,
+        user_id: req.body.user_id,
+        comment: req.body.comment
+    })
+}
+
+
+exports.getUserComment = (req, res) => {
+    const beerId = req.params.id;
+    User_Comments.findOne({ where: { 
+        user_id: req.headers.user,
+        beer_id: beerId 
+    } })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
 }
 
 // Retrieve all Beers from the database.
@@ -77,7 +93,7 @@ exports.findAll = (req, res) => {
 };
 
 exports.findAllFromUser = (req, res) => {
-    Beer.findAll({ where: {added_by: req.user.sub}})
+    Beer.findAll({ where: { added_by: req.headers.user}})
         .then(data => {
             res.send(data);
         })
@@ -91,21 +107,20 @@ exports.findAllFromUser = (req, res) => {
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
-    const id = req.params.id;
-    Beer.findByPk(id)
+    const beerId = req.params.id;
+    Beer.findByPk(beerId)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Beer with id=" + id
+                message: "Error retrieving Beer with id=" + beerId
             });
         });
 };
 
 exports.findByName = (req, res) => {
     // console.log(req.params.name)
-    console.log("here$$$$$$$$$$$$")
     const name = req.params.name;
 
     Beer.findAll({ where: { name: {
