@@ -65,7 +65,9 @@ exports.addUserComment = (req, res) => {
 
 exports.getUserComment = (req, res) => {
     const beerId = req.params.id;
-    User_Comments.findOne({ where: { 
+    User_Comments.findOne({ 
+        attributes: ['comment'],
+        where: { 
         user_id: req.headers.user,
         beer_id: beerId 
     } })
@@ -93,7 +95,9 @@ exports.findAll = (req, res) => {
 };
 
 exports.findAllFromUser = (req, res) => {
-    Beer.findAll({ where: { added_by: req.headers.user}})
+    Beer.findAll({ 
+        where: { added_by: req.headers.user}
+    })
         .then(data => {
             res.send(data);
         })
@@ -105,7 +109,6 @@ exports.findAllFromUser = (req, res) => {
         });
 };
 
-// Find a single Tutorial with an id
 exports.findOne = (req, res) => {
     const beerId = req.params.id;
     Beer.findByPk(beerId)

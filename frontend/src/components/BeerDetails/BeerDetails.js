@@ -24,8 +24,10 @@ function BeerDetails(props) {
                 country_origin: "",
                 container: "",
                 image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
-                user_comment: ""
             })
+    const [currentComment, setCurrentComment] = useState({
+        user_comment: "Nada, didn't think much or just don't think?"
+    })
    
     useEffect(() => {
         const getBeer = async (id) => {
@@ -44,44 +46,32 @@ function BeerDetails(props) {
             }
             
             Promise.all([
-                //fetch(beerUrl, options).then(response => console.log(response)),
-                fetch(commentUrl, options).then(response => console.log(response))
+                fetch(beerUrl, options)
+                    .then(response => response.json()),
+                fetch(commentUrl, options)
+                    .then(response => response.json())
             ])
-            // .then(response => {
-            //     console.log("here")
-            //     console.log(response)
-            //     // response.json()
-            //     //     .then(response => {
-            //     //         console.log(response)
-            //     //     })
-            //     //     .catch(e => {
-            //     //         console.log(e);
-            //     //     });
-            //     })
-                .catch(e => {
-                    console.log(e);
-                });
-            // .then(response => {
-            //     response.json()
-            //         .then(response => {
-            //             const { id, name, details, beer_type, brewery, alc_per, country_origin, container, image_url } = response
-            //             setCurrentBeer({
-            //                 "id": id,
-            //                 "name": name,
-            //                 "details": details,
-            //                 "beer_type": beer_type,
-            //                 "brewery": brewery,
-            //                 "alc_per": alc_per,
-            //                 "country_origin": country_origin,
-            //                 "container": container,
-            //                 "image_url": image_url
-            //             })
-            //         })
-            //         .catch(e => {
-            //             console.log(e);
-            //         });
-            // })
+            .then(response => {
+                let {id, name, alc_per, beer_type, brewery, container, country_origin, details, image_url, comment} = { ...response[0], ...response[1]};
 
+                setCurrentBeer({
+                    "id": id,
+                    "name": name,
+                    "details": details,
+                    "beer_type": beer_type,
+                    "brewery": brewery,
+                    "alc_per": alc_per,
+                    "country_origin": country_origin,
+                    "container": container,
+                    "image_url": image_url
+                })
+                setCurrentComment({
+                    "user_comment": comment
+                })
+            })
+            .catch(e => {
+                console.error(e);
+            });
         }
         getBeer(props.match.params.id)
     }, [props.match.params.id]);
@@ -123,8 +113,8 @@ function BeerDetails(props) {
                     </div>
                     <div className="pt-4 ml-4">
                         <img className="inline" alt="Notes Icon" src={notesIcon} />
-                        <h4 className="inline text-sm font-bold pl-1">{currentBeer.user_comment}</h4>
-                        <p className="text-base pt-1"></p>
+                        <h4 className="inline text-sm font-bold pl-1">Notes</h4>
+                        <p className="text-base pt-1">{currentComment.user_comment}</p>
                     </div>
                 </div>     
             </main>
