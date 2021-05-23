@@ -10,6 +10,7 @@ import ProfilePage from './components/ProfilePage/ProfilePage';
 import SearchBeer from './components/SearchBeer/SearchBeer';
 import Loading from './components/Loading/Loading';
 import AddComment from './components/AddComment/AddComment';
+import EditBeer from './components/EditBeer/EditBeer';
 //Auth
 import ProtectedRoute from "./auth/ProtectedRoute";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -41,6 +42,8 @@ const App = () => {
         <ProtectedRoute path="/addbeer" component={AddBeer} />
 
         <ProtectedRoute path="/search" component={SearchBeer} />
+
+        <ProtectedRoute path="/edit/:id" component={(props) => <EditBeer {...props} />} />
 
         <ProtectedRoute path="/addcomment/:id" component={(props) => <AddComment {...props} />} />
 

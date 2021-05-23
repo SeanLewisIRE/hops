@@ -10,10 +10,13 @@ import "./BeerDetails.css";
 
 import { useAuth0, user } from "@auth0/auth0-react";
 
+import EditBeer from '../../components/EditBeer/EditBeer'
 
 function BeerDetails(props) {
-
     const { getAccessTokenSilently, user } = useAuth0();
+
+    const [isEdit, setIsEdit] = useState(false)
+
     const [currentBeer, setCurrentBeer] = useState({
                 id: null,
                 name: "",
@@ -24,7 +27,9 @@ function BeerDetails(props) {
                 country_origin: "",
                 container: "",
                 image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/no_image_can.jpg",
-            })
+                added_by: ""
+    })
+
     const [currentComment, setCurrentComment] = useState({
         user_comment: "Nada, didn't think much or just don't think?"
     })
@@ -52,7 +57,8 @@ function BeerDetails(props) {
                     .then(response => response.json())
             ])
             .then(response => {
-                let {id, name, alc_per, beer_type, brewery, container, country_origin, details, image_url, comment} = { ...response[0], ...response[1]};
+
+                let {id, name, alc_per, beer_type, brewery, container, country_origin, details, image_url, added_by, comment} = { ...response[0], ...response[1]};
 
                 setCurrentBeer({
                     "id": id,
@@ -63,7 +69,8 @@ function BeerDetails(props) {
                     "alc_per": alc_per,
                     "country_origin": country_origin,
                     "container": container,
-                    "image_url": image_url
+                    "image_url": image_url,
+                    "added_by": added_by
                 })
                 setCurrentComment({
                     "user_comment": comment
@@ -76,52 +83,75 @@ function BeerDetails(props) {
         getBeer(props.match.params.id)
     }, [props.match.params.id]);
 
-    
-    // console.log("here")
-    // console.log(currentBeer)
+
+    const editBeer = () => {
+        setIsEdit(true)
+    }
+
     return (
         <div className="page">
             <NavBar />
-            <main>
-                <img className="beer-image" src={currentBeer.image_url} alt="Beer" />
-                
-                <div className="beer-header h-full container px-5">
-                    <h1 className="text-xl pt-4 pb-2 font-black">{currentBeer.name}</h1>
-                    <h2 className="text-base pb-4">{currentBeer.brewery}</h2>
-                </div>
 
-                <div className="container">
-                    <div className="pt-4 ml-4">
-                        <img className="inline" alt="Type Icon" src={typeIcon} />
-                        <h4 className="inline text-sm font-bold pl-1">Type</h4>
-                        <p className="text-base pt-1">{currentBeer.beer_type}</p>
+            {isEdit ? 
+                <EditBeer
+                    id={currentBeer.id}
+                    name={currentBeer.name}
+                    details={currentBeer.details}
+                    beerType={currentBeer.beer_type}
+                    brewery={currentBeer.brewery}
+                    alcPer={currentBeer.alc_per}
+                    country={currentBeer.country_origin}
+                    container={currentBeer.container}
+                />
+                :
+                <main>
+                    <img className="beer-image" src={currentBeer.image_url} alt="Beer" />
+
+                    <div className="beer-header h-full container px-5">
+                        <h1 className="text-xl pt-4 pb-2 font-black">{currentBeer.name}</h1>
+                        <h2 className="text-base pb-4">{currentBeer.brewery}</h2>
                     </div>
-                    <div className="pt-4 ml-4">
-                        <img className="inline" alt="Details Icon" src={beerIcon} />
-                        <h4 className="inline text-sm font-bold pl-1">Details</h4>
-                        <p className="text-base pt-1">{currentBeer.details}</p>
+
+                    <div className="container">
+                        <div className="pt-4 ml-4">
+                            <img className="inline" alt="Type Icon" src={typeIcon} />
+                            <h4 className="inline text-sm font-bold pl-1">Type</h4>
+                            <p className="text-base pt-1">{currentBeer.beer_type}</p>
+                        </div>
+                        <div className="pt-4 ml-4">
+                            <img className="inline" alt="Details Icon" src={beerIcon} />
+                            <h4 className="inline text-sm font-bold pl-1">Details</h4>
+                            <p className="text-base pt-1">{currentBeer.details}</p>
+                        </div>
+                        <div className="pt-4 ml-4">
+                            <img className="inline" alt="Strength Icon" src={strengthIcon} />
+                            <h4 className="inline text-sm font-bold pl-1">Strength</h4>
+                            <p className="text-base pt-1">{currentBeer.alc_per}%</p>
+                        </div>
+                        <div className="pt-4 ml-4">
+                            <img className="inline" alt="Country Icon" src={beerIcon} />
+                            <h4 className="inline text-sm font-bold pl-1">Country</h4>
+                            <p className="text-base pt-1">{currentBeer.country_origin}</p>
+                        </div>
+                        <div className="pt-4 ml-4">
+                            <img className="inline" alt="Notes Icon" src={notesIcon} />
+                            <h4 className="inline text-sm font-bold pl-1">Notes</h4>
+                            <p className="text-base pt-1">{currentComment.user_comment}</p>
+                        </div>
+
+                        {currentBeer.added_by === user.sub &&
+                            <div className="flex justify-center h-16 w-full button-background content-center">
+                                <button onClick={editBeer} className="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
+                                    Edit Your Beer
+                            </button>
+                            </div>
+                        }
+                        {/* Could  put in an else to request an edit */}
                     </div>
-                    <div className="pt-4 ml-4">
-                        <img className="inline" alt="Strength Icon" src={strengthIcon} />
-                        <h4 className="inline text-sm font-bold pl-1">Strength</h4>
-                        <p className="text-base pt-1">{currentBeer.alc_per}%</p>
-                    </div>
-                    <div className="pt-4 ml-4">
-                        <img className="inline" alt="Country Icon" src={beerIcon} />
-                        <h4 className="inline text-sm font-bold pl-1">Country</h4>
-                        <p className="text-base pt-1">{currentBeer.country_origin}</p>
-                    </div>
-                    <div className="pt-4 ml-4">
-                        <img className="inline" alt="Notes Icon" src={notesIcon} />
-                        <h4 className="inline text-sm font-bold pl-1">Notes</h4>
-                        <p className="text-base pt-1">{currentComment.user_comment}</p>
-                    </div>
-                </div>     
-            </main>
+                </main>
+            }
         </div>
     )
-
-
 }
 
 export default BeerDetails;

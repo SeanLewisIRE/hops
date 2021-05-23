@@ -12,7 +12,11 @@ module.exports = app => {
 
     router.get("/", beers.findAllFromUser);
 
+    router.get("/commentedBeers", beers.findAllWithUserComments);
+
     router.get("/:id", beers.findOne);
+
+    router.post("/edit/:id", beers.editOne);
 
     router.get("/search/:name", beers.findByName)
 

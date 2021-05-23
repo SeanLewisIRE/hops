@@ -140,6 +140,38 @@ exports.findByName = (req, res) => {
         });
 }
 
+exports.editOne = (req, res) => {
+    const beerId = req.params.id;
+    console.log("edit One")
+    console.log(req)
+    Beer.update({
+        name: req.body.name,
+        details: req.body.details,
+        brewery: req.body.brewery,
+        containers: req.body.containers,
+        image_url: req.body.image_url,
+    }, {
+        where: {
+            id: beerId
+        }
+    })
+};
+
+exports.findAllWithUserComments = (req, res) => {
+    // Beer.findAll({
+    //     where: { added_by: req.headers.user }
+    // })
+    //     .then(data => {
+    //         res.send(data);
+    //     })
+    //     .catch(err => {
+    //         res.status(500).send({
+    //             message:
+    //                 err.message || "Some error occurred while retrieving user beers."
+    //         });
+    //     });
+}
+
 // Update a Tutorial by the id in the request
 exports.update = (req, res) => {
 
