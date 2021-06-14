@@ -158,6 +158,20 @@ exports.editOne = (req, res) => {
 };
 
 exports.findAllWithUserComments = (req, res) => {
+
+    Beer.findAll({
+        include: [{
+            model: User_Comments
+        }]
+    }).then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:err.message                
+            });
+        });
+
     // Beer.findAll({
     //     where: { added_by: req.headers.user }
     // })
