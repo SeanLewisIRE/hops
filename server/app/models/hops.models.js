@@ -33,14 +33,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         }
     }, {
-        // classMethods: {
-        //     associate(models) {
-        //         this.belongsTo(models.User_Comments, {
-        //             foreignKey: 'beer_id',
-        //             as: 'beer_id',
-        //         });
-        //     },
-        // },
         tableName: "beer_master"
     });
 
@@ -69,7 +61,8 @@ module.exports = (sequelize, Sequelize) => {
         tableName: "user_comments"
     });
 
-    Beer.belongsTo(User_Comments, { foreignKey: 'id' })
+    User_Comments.belongsTo(Beer, { foreignKey: 'beer_id'})
+    // Beer.belongsTo(User_Comments, { foreignKey: 'id' })
     // User_Comments.belongsTo(Beer, { foreignKey: 'beer_id' })
 
     return {Beer, Logged_By, User_Comments};

@@ -57,7 +57,7 @@ exports.create = (req, res) => {
 exports.addUserComment = (req, res) => {
     User_Comments.create({
         beer_id: req.body.beer_id,
-        user_id: req.body.user_id,
+        user_id: req.headers.user,
         comment: req.body.comment
     })
 }
@@ -65,6 +65,7 @@ exports.addUserComment = (req, res) => {
 
 exports.getUserComment = (req, res) => {
     const beerId = req.params.id;
+
     User_Comments.findOne({ 
         attributes: ['comment'],
         where: { 
@@ -72,7 +73,13 @@ exports.getUserComment = (req, res) => {
         beer_id: beerId 
     } })
         .then(data => {
-            res.send(data);
+            if(data === null ){
+                res.send(
+                    {"body": "none"}
+                );
+            } else {
+                res.send(data);
+            }
         })
         .catch(err => {
             console.log(err)
@@ -159,31 +166,20 @@ exports.editOne = (req, res) => {
 
 exports.findAllWithUserComments = (req, res) => {
 
-    Beer.findAll({
+    User_Comments.findAll({
+        where: { user_id: req.headers.user },
         include: [{
-            model: User_Comments
+            model: Beer
         }]
-    }).then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:err.message                
-            });
+    })
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:err.message                
         });
-
-    // Beer.findAll({
-    //     where: { added_by: req.headers.user }
-    // })
-    //     .then(data => {
-    //         res.send(data);
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({
-    //             message:
-    //                 err.message || "Some error occurred while retrieving user beers."
-    //         });
-    //     });
+    });
 }
 
 // Update a Tutorial by the id in the request

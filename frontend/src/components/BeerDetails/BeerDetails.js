@@ -31,9 +31,46 @@ function BeerDetails(props) {
     })
 
     const [currentComment, setCurrentComment] = useState({
-        user_comment: "Nada, didn't think much or just don't think?"
+        "commentBoole": false
     })
-   
+
+    const [updateComment, setUpdateComment] = useState({
+        user_comment: ""
+    })
+
+    const onChangeComment = (e) => {
+        setUpdateComment({
+            user_comment: e.target.value
+        });
+    }
+
+    const saveUserComment = async (e) => {
+        const token = await getAccessTokenSilently();
+        const commentUrl = 'http://localhost:8080/api/beers/addcomment'
+        const data = {
+            beer_id: currentBeer.id,
+            comment: updateComment.user_comment
+        } 
+        const options = {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                Authorization: `Bearer ${token}`,
+                user: user.sub
+            },
+            body: JSON.stringify(data)
+        }
+
+        fetch(commentUrl, options)
+            .then((data) => {
+                console.log(data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
     useEffect(() => {
         const getBeer = async (id) => {
             const token = await getAccessTokenSilently();
@@ -50,36 +87,49 @@ function BeerDetails(props) {
                 }
             }
             
-            Promise.all([
-                fetch(beerUrl, options)
-                    .then(response => response.json()),
-                fetch(commentUrl, options)
-                    .then(response => response.json())
-            ])
-            .then(response => {
+            fetch(beerUrl, options)
+                .then(response => response.json())
+                .then(response => {
+                    let {id, name, alc_per, beer_type, brewery, container, country_origin, details, image_url, added_by} = { ...response};
 
-                let {id, name, alc_per, beer_type, brewery, container, country_origin, details, image_url, added_by, comment} = { ...response[0], ...response[1]};
+                    setCurrentBeer({
+                        "id": id,
+                        "name": name,
+                        "details": details,
+                        "beer_type": beer_type,
+                        "brewery": brewery,
+                        "alc_per": alc_per,
+                        "country_origin": country_origin,
+                        "container": container,
+                        "image_url": image_url,
+                        "added_by": added_by
+                    })
+                })
+                .catch(e => {
+                    console.error(e);
+                });
+            
+            fetch(commentUrl, options)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.body !== "none") {
+                        let { comment } = { ...response };
+                        setCurrentComment({
+                            "commentBoole": true,
+                            "user_comment": comment
+                        })
+                    } else {
+                        setCurrentComment({
+                            "commentBoole": false
+                        })
+                    }
 
-                setCurrentBeer({
-                    "id": id,
-                    "name": name,
-                    "details": details,
-                    "beer_type": beer_type,
-                    "brewery": brewery,
-                    "alc_per": alc_per,
-                    "country_origin": country_origin,
-                    "container": container,
-                    "image_url": image_url,
-                    "added_by": added_by
                 })
-                setCurrentComment({
-                    "user_comment": comment
-                })
-            })
-            .catch(e => {
-                console.error(e);
-            });
+                .catch(e => {
+                    console.error(e);
+                });
         }
+
         getBeer(props.match.params.id)
     }, [props.match.params.id]);
 
@@ -102,6 +152,7 @@ function BeerDetails(props) {
                     alcPer={currentBeer.alc_per}
                     country={currentBeer.country_origin}
                     container={currentBeer.container}
+                    comment={currentComment.user_comment}
                 />
                 :
                 <main>
@@ -133,20 +184,42 @@ function BeerDetails(props) {
                             <h4 className="inline text-sm font-bold pl-1">Country</h4>
                             <p className="text-base pt-1">{currentBeer.country_origin}</p>
                         </div>
-                        <div className="pt-4 ml-4">
-                            <img className="inline" alt="Notes Icon" src={notesIcon} />
-                            <h4 className="inline text-sm font-bold pl-1">Notes</h4>
-                            <p className="text-base pt-1">{currentComment.user_comment}</p>
-                        </div>
+
+                        {currentComment.commentBoole ? 
+                            <div className="pt-4 ml-4">
+                                <img className="inline" alt="Notes Icon" src={notesIcon} />
+                                <h4 className="inline text-sm font-bold pl-1">Notes</h4>
+                                <p className="text-base pt-1">{currentComment.user_comment}</p>
+                            </div>
+                            :
+                            <form>
+                                <div className="shadow overflow-hidden sm:rounded-md">
+                                    <div className="px-4 py-5 bg-white sm:p-6">
+                                        <div className="col-span-6">
+                                            <img className="inline" alt="Notes Icon" src={notesIcon} />
+                                            <label htmlFor="user_comment" className="inline pl-1 text-xs font-bold tracking-tight">Comments</label>
+                                            <input type="text" name="user_comment" id="user_comment" autoComplete="user_comment" className="mt-1 h-16 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-black-500"
+                                                onChange={onChangeComment}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-center h-16 w-full button-background content-center">
+                                    <button onClick={saveUserComment} type="submit" className="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
+                                        Add Your Thoughts
+                                    </button>
+                                </div>
+                            </form>
+                        }
 
                         {currentBeer.added_by === user.sub &&
                             <div className="flex justify-center h-16 w-full button-background content-center">
                                 <button onClick={editBeer} className="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
-                                    Edit Your Beer
+                                    You added it, you can edit it!
                             </button>
                             </div>
                         }
-                        {/* Could  put in an else to request an edit */}
                     </div>
                 </main>
             }

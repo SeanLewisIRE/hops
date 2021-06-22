@@ -9,7 +9,7 @@ import LoginPage from './components/LoginPage/LoginPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import SearchBeer from './components/SearchBeer/SearchBeer';
 import Loading from './components/Loading/Loading';
-import AddComment from './components/AddComment/AddComment';
+// import AddComment from './components/AddComment/AddComment';
 import EditBeer from './components/EditBeer/EditBeer';
 //Auth
 import ProtectedRoute from "./auth/ProtectedRoute";
@@ -45,7 +45,8 @@ const App = () => {
 
         <ProtectedRoute path="/edit/:id" component={(props) => <EditBeer {...props} />} />
 
-        <ProtectedRoute path="/addcomment/:id" component={(props) => <AddComment {...props} />} />
+        {/* This route/component is no longer required, all handled in BeerDetails now */}
+        {/* <ProtectedRoute path="/addcomment/:id" component={(props) => <AddComment {...props} />} /> */}
 
         <ProtectedRoute path="/beerdetails/:id" component={(props) => <BeerDetails {...props}/>} />
 

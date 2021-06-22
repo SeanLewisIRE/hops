@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import NavBar from '../NavBar/NavBar'
 import { Link } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
+import searchIcon from '../../static/icons/search-icon.svg';
 
 
 const SearchBeer = (props) => {
@@ -9,7 +10,7 @@ const SearchBeer = (props) => {
 
 
     const [searchResult, setSeatchResult] = useState([]);
-    const [searchValue, setSearchValue] = useState(" ");
+    const [searchValue, setSearchValue] = useState("");
 
     const search = async () => {
         const token = await getAccessTokenSilently();
@@ -46,13 +47,13 @@ const SearchBeer = (props) => {
                 type="text"
                 value={searchValue}
                 onChange={e => {setSearchValue(e.target.value); search()} }
-                placeholder="Search"
+                placeholder="Search by Name"
             />
-
+            <img src={searchIcon}/>
             {/* Below link needs to link to page where only comment is editable */}
             {
                 searchResult.map((beer, index) => (
-                    <Link key={beer.id} className="box-shadow w-screen p-1.5" to={`/AddComment/${beer.id}`}>
+                    <Link key={beer.id} className="box-shadow w-screen p-1.5" to={`/BeerDetails/${beer.id}`}>
                         <img className="max-w-none h-44 w-44" alt="Beer" src={beer.image_url} />
                         <div className="my-3">
                             <h2 className="text-sm font-bold tracking-tight">{beer.name}</h2>
@@ -61,13 +62,13 @@ const SearchBeer = (props) => {
                     </Link>
                 ))
             }
-            <div className="flex justify-center h-16 w-full button-background content-center">
+            {/* <div className="flex justify-center h-16 w-full button-background content-center">
                 <Link className="box-shadow w-screen p-1.5" to={`/AddBeer`}>
                 <button type="submit" className="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
                     Add Beer
                 </button>
                 </Link>
-            </div>
+            </div> */}
         </div>
     )
 }

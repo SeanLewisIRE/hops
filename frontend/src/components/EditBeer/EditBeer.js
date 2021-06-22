@@ -24,7 +24,7 @@ const config = {
 }
 
 
-function BeerDetails(props) {
+function EditBeerDetails(props) {
     const { getAccessTokenSilently, user } = useAuth0();
 
     const [beer, setBeer] = useState({
@@ -291,4 +291,4 @@ function BeerDetails(props) {
 
 }
 
-export default BeerDetails;
+export default EditBeerDetails;
