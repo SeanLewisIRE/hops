@@ -9,6 +9,8 @@ import beerIcon from '../../static/icons/beer.svg';
 import "./AddComment.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
+import httpValue from '../../http-common'
+
 
 
 function AddComment(props) {
@@ -30,7 +32,7 @@ function AddComment(props) {
     useEffect(() => {
         const getBeer = async (id) => {
             const token = await getAccessTokenSilently();
-            const url = `http://localhost:8080/api/beers/${id}`;
+            const url = `${httpValue}/beers/${id}`;
             const options = {
                 method: 'GET',
                 headers: {
@@ -77,7 +79,7 @@ function AddComment(props) {
     const saveUserComment = async (e) => {
 
         const token = await getAccessTokenSilently();
-        const url = 'http://localhost:8080/api/beers/addcomment';
+        const url = `${httpValue}/beers/addcomment`;
 
         let data = {
             beer_id: currentBeer.id,

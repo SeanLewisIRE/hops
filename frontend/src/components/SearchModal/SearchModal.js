@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Transition } from '@headlessui/react'
 import { Link } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import closeIcon from '../../static/icons/close.png'
-
+import httpValue from '../../http-common'
 import './SearchModal.css'
 
 const SearchModal = (props) => {
@@ -15,7 +14,7 @@ const SearchModal = (props) => {
 
     const search = async () => {
         const token = await getAccessTokenSilently();
-        const url = `http://localhost:8080/api/beers/search/${searchValue}`;
+        const url = `${httpValue}/beers/search/${searchValue}`;
         const options = {
             method: 'GET',
             headers: {

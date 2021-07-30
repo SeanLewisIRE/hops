@@ -8,6 +8,7 @@ import randomIcon from '../../static/icons/randomIcon.svg'
 import addIcon from '../../static/icons/addIcon.svg'
 import searchIcon from '../../static/icons/searchIcon.svg'
 import SearchModal from '../SearchModal/SearchModal'
+import httpValue from '../../http-common'
 
 const BeerList = () => {
 
@@ -22,9 +23,9 @@ const BeerList = () => {
 
     const getBeers = async () => {
         const token = await getAccessTokenSilently();
-        const beerUrl = 'http://localhost:8080/api/beers';
-        const commentedUrl = 'http://localhost:8080/api/beers/commentedBeers'
-
+        const beerUrl = `${httpValue}/beers`;
+        const commentedUrl = `${httpValue}/beers/commentedBeers`
+        console.log(beerUrl)
         const options = {
             method: 'GET',
             headers: {

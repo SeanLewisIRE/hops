@@ -3,6 +3,7 @@ import NavBar from '../NavBar/NavBar'
 import { Link } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import searchIcon from '../../static/icons/search-icon.svg';
+import httpValue from '../../http-common'
 
 
 const SearchBeer = (props) => {
@@ -14,7 +15,7 @@ const SearchBeer = (props) => {
 
     const search = async () => {
         const token = await getAccessTokenSilently();
-        const url = `http://localhost:8080/api/beers/search/${searchValue}`;
+        const url = `${httpValue}/beers/search/${searchValue}`;
         const options = {
             method: 'GET',
             headers: {
@@ -49,7 +50,7 @@ const SearchBeer = (props) => {
                 onChange={e => {setSearchValue(e.target.value); search()} }
                 placeholder="Search by Name"
             />
-            <img src={searchIcon}/>
+            <img src={searchIcon} alt="hops logo"/>
             {/* Below link needs to link to page where only comment is editable */}
             {
                 searchResult.map((beer, index) => (

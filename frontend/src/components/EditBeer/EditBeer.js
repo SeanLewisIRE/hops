@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 // import hopsDataService from '../../services/hops.service';
-import NavBar from '../NavBar/NavBar'
 import S3FileUpload from 'react-s3'
-
 import notesIcon from '../../static/icons/notes.svg';
 import strengthIcon from '../../static/icons/strength.svg';
 import typeIcon from '../../static/icons/type.svg';
@@ -11,6 +9,7 @@ import "./EditBeer.css";
 import addPhoto from '../../static/icons/addPhoto.svg';
 
 import axios from 'axios'
+import httpValue from '../../http-common'
 
 
 import { useAuth0, user } from "@auth0/auth0-react";
@@ -120,7 +119,7 @@ function EditBeerDetails(props) {
     const editBeer = async (e) => {
 
         const token = await getAccessTokenSilently();
-        const url = `http://localhost:8080/api/beers/edit/${beer.id}`;
+        const url = `${httpValue}/beers/edit/${beer.id}`;
 
         let data = {
             name: beer.name,

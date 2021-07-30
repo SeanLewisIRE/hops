@@ -10,8 +10,8 @@ import strengthIcon from '../../static/icons/strength.svg';
 import typeIcon from '../../static/icons/type.svg';
 import beerIcon from '../../static/icons/beer.svg';
 import { useAuth0 } from "@auth0/auth0-react";
+import httpValue from '../../http-common'
 
-import axios from 'axios'
 
 function AddBeer(props){
 
@@ -91,7 +91,7 @@ function AddBeer(props){
     const onChangeImageS3upload = async (e) => {
 
         const token = await getAccessTokenSilently();
-        const url = 'http://localhost:8080/api/beers/createPreUrl';
+        const url = `${httpValue}/beers/createPreUrl`;
         
         const fileName = e.target.form[0].files[0]['name'];
 
@@ -146,7 +146,7 @@ function AddBeer(props){
     const saveBeer = async (e) => {
 
         const token = await getAccessTokenSilently();
-        const url = 'http://localhost:8080/api/beers';
+        const url = `${httpValue}/beers`;
 
         let data = {
             name: beer.name,

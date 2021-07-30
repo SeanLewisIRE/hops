@@ -11,6 +11,8 @@ import "./BeerDetails.css";
 import { useAuth0, user } from "@auth0/auth0-react";
 
 import EditBeer from '../../components/EditBeer/EditBeer'
+import httpValue from '../../http-common'
+
 
 function BeerDetails(props) {
     const { getAccessTokenSilently, user } = useAuth0();
@@ -46,7 +48,7 @@ function BeerDetails(props) {
 
     const saveUserComment = async (e) => {
         const token = await getAccessTokenSilently();
-        const commentUrl = 'http://localhost:8080/api/beers/addcomment'
+        const commentUrl = `${httpValue}/beers/addcomment`
         const data = {
             beer_id: currentBeer.id,
             comment: updateComment.user_comment
@@ -74,8 +76,8 @@ function BeerDetails(props) {
     useEffect(() => {
         const getBeer = async (id) => {
             const token = await getAccessTokenSilently();
-            const beerUrl = `http://localhost:8080/api/beers/${id}`;
-            const commentUrl = `http://localhost:8080/api/beers/getcomment/${id}`;
+            const beerUrl = `${httpValue}/beers/${id}`;
+            const commentUrl = `${httpValue}/beers/getcomment/${id}`;
             
             const options = {
                 method: 'GET',
