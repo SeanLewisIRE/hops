@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import S3FileUpload from 'react-s3'
+// import S3FileUpload from 'react-s3'
 // import hopsDataService from '../../services/hops.service';
 import NavBar from '../NavBar/NavBar'
 
@@ -9,18 +9,9 @@ import notesIcon from '../../static/icons/notes.svg';
 import strengthIcon from '../../static/icons/strength.svg';
 import typeIcon from '../../static/icons/type.svg';
 import beerIcon from '../../static/icons/beer.svg';
-
 import { useAuth0 } from "@auth0/auth0-react";
 
 import axios from 'axios'
-
-const config = {
-    bucketName: "hops-bucket",
-    dirName: "user-images",
-    accessKey: process.env.REACT_APP_S3_ACCESS_KEY,
-    secretKey: process.env.REACT_APP_S3_SECRET_KEY,
-    region: 'eu-west-1',
-}
 
 function AddBeer(props){
 
@@ -97,23 +88,59 @@ function AddBeer(props){
         });
     }
 
-    const onChangeImageS3upload = (e) => {
-        setBeer({
-            ...beer,
-            image_url: "https://hops-bucket.s3-eu-west-1.amazonaws.com/static_images/beer_loading.gif"
-        })
+    const onChangeImageS3upload = async (e) => {
 
-        // form[0] is the loaction of the image upload field in the form. 
-        S3FileUpload.uploadFile(e.target.form[0].files[0], config)
-            .then((upload) => {
-                console.log(upload.location)
-                this.setState({
-                    image_url: upload.location,
-                })
+        const token = await getAccessTokenSilently();
+        const url = 'http://localhost:8080/api/beers/createPreUrl';
+        
+        const fileName = e.target.form[0].files[0]['name'];
+
+        let data = {
+            // name: `${fileName}-User:${user.sub}`
+            name: fileName
+        };
+
+        const preSignedOptions = {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                Authorization: `Bearer ${token}`,
+                user: user.sub
+            },
+            body: JSON.stringify(data)
+        }
+
+        const file = e.target.form[0].files[0];
+
+        const POSToptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'image/*',
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: file
+        }
+
+        fetch(url, preSignedOptions)
+            .then(response => response.json())
+            .then(data => {
+                let POSTurl = data.url
+                fetch(POSTurl, POSToptions)
+                    .then(response => {
+                        const regex = /^http(.*)(?=(\?))/g;
+                        const s3Url = response.url.match(regex)[0];
+
+                        setBeer({
+                            ...beer,
+                            image_url: s3Url,
+                        })
+                    })
             })
             .catch((err) => {
                 console.log(err)
             })
+
     }
 
     const saveBeer = async (e) => {
@@ -134,15 +161,23 @@ function AddBeer(props){
             added_by: user.sub,
         };
         
-        const headers = {
-            "Content-type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            Authorization: `Bearer ${token}`,
+        // const headers = {
+        //     "Content-type": "application/json",
+        //     "Access-Control-Allow-Origin": "*",
+        //     Authorization: `Bearer ${token}`,
+        // }
+
+        const options = {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(data)
         }
 
-        axios.post(url, data, {
-            headers: headers
-        })
+        fetch(url, options)
         .then(() => {
             setBeer({
                 ...beer,

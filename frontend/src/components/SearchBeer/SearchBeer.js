@@ -62,13 +62,13 @@ const SearchBeer = (props) => {
                     </Link>
                 ))
             }
-            {/* <div className="flex justify-center h-16 w-full button-background content-center">
+            <div className="flex justify-center h-16 w-full button-background content-center">
                 <Link className="box-shadow w-screen p-1.5" to={`/AddBeer`}>
                 <button type="submit" className="m-auto h-11 w-4/5 bg-black text-white block shadow-sm sm:text-sm border-black-500 " >
                     Add Beer
                 </button>
                 </Link>
-            </div> */}
+            </div>
         </div>
     )
 }

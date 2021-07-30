@@ -20,5 +20,7 @@ module.exports = app => {
 
     router.get("/search/:name", beers.findByName)
 
+    router.post("/createPreUrl", beers.createPreSignedUrl);
+
     app.use('/api/beers', router)
 }

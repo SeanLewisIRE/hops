@@ -1,3 +1,5 @@
+
+
 const db = require("../models");
 
 const Beer = db.models["Beer"];
@@ -5,6 +7,41 @@ const Logged_By = db.models["Logged_By"];
 const User_Comments = db.models["User_Comments"];
 
 const Op = db.Sequelize.Op;
+
+const AWS = require('aws-sdk');
+AWS.config.update({ region: 'eu-west-1' });
+s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+
+exports.createPreSignedUrl = (req, res) => {
+
+    async function getPresignedUploadUrl() {
+        const bucketName = "hops-bucket"
+        const dirName = "user-images"
+
+        const key = `${dirName}/${req.body.name}`;
+
+        const url = await s3
+            .getSignedUrl('putObject', {
+                Bucket: bucketName,
+                Key: key,
+                ContentType: 'image/*',
+                Expires: 300,
+            })
+
+        return url;
+    }
+    let url = getPresignedUploadUrl()
+    url.then(result => {
+        const urlObject = { "url": result }
+        res.send(urlObject)
+    }).catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "An error occurred while sendin."
+        });
+    });
+
+}
 
 
 // Create and Save a new Tutorial
