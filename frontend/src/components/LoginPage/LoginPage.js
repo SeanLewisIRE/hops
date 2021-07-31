@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const LoginPage = () => {
     const { loginWithRedirect } = useAuth0();
-
+    console.log("Here")
     return (
         <div className="login-page flex h-screen justify-center items-center">
             <div className="flex-col">
