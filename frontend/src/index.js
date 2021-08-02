@@ -17,10 +17,10 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Auth0Provider
-        domain={domain}
-        clientId={clientId}
-        redirectUri={redirectURL}
-        audience={audience}
+        domain="dev-prmczu8a.eu.auth0.com"
+        clientId="TbFns5oLjRMT6xtH9vPJYYD3dBTYtHox"
+        redirectUri="https://hopsfyi.herokuapp.com/beerlist"
+        audience="https://hops-api"
       > 
           <App className="h-screen"/>   
       </Auth0Provider>
