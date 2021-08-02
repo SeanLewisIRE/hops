@@ -16,14 +16,14 @@ console.log(domain, clientId, audience, redirectURL)
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Auth0Provider
+      {/* <Auth0Provider
         domain={domain}
         clientId={clientId}
         redirectUri={redirectURL}
         audience={audience}
-      > 
+      >  */}
           <App className="h-screen"/>   
-      </Auth0Provider>
+      {/* </Auth0Provider> */}
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
