@@ -20,7 +20,7 @@ ReactDOM.render(
         domain="dev-prmczu8a.eu.auth0.com"
         clientId="TbFns5oLjRMT6xtH9vPJYYD3dBTYtHox"
         redirectUri="https://hopsfyi.herokuapp.com/beerlist"
-        audience="https://hops-api"
+        audience="https://dev-prmczu8a.eu.auth0.com/api/v2/"
       > 
           <App className="h-screen"/>   
       </Auth0Provider>
