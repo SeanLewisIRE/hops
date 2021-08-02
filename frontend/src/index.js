@@ -11,6 +11,8 @@ const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
 const redirectURL = process.env.REACT_APP_REDIRECT_URL;
 
+console.log(domain, clientId, audience, redirectURL)
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
