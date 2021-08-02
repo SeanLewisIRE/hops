@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import App from './App';
 import { Auth0Provider } from "@auth0/auth0-react";
-
 import reportWebVitals from './reportWebVitals';
 
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
@@ -17,7 +16,7 @@ ReactDOM.render(
       <Auth0Provider
         domain={domain}
         clientId={clientId}
-        redirectUri="https://localhost:3306/beerlist"
+        redirectUri="https://hopsfyi.herokuapp.com/beerlist"
         audience={audience}
       > 
           <App className="h-screen"/>   
