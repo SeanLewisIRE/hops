@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals';
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
+const redirectURL = process.env.REACT_APP_REDIRECT_URL;
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,7 +17,7 @@ ReactDOM.render(
       <Auth0Provider
         domain={domain}
         clientId={clientId}
-        redirectUri="https://hopsfyi.herokuapp.com/beerlist"
+        redirectUri={redirectURL}
         audience={audience}
       > 
           <App className="h-screen"/>   
