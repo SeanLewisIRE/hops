@@ -18,8 +18,8 @@ ReactDOM.render(
     <BrowserRouter>
       <Auth0Provider
         domain="dev-prmczu8a.eu.auth0.com"
-        clientId="7synNevGl37rECv6tBS3Hv06mYduRgmL"
-        redirectUri="https://hopsfyi.herokuapp.com/beerlist"
+        clientId="TbFns5oLjRMT6xtH9vPJYYD3dBTYtHox"
+        redirectUri="https://hopsfyi.herokuapp.com//beerlist"
         audience="https://hops-api"
       > 
           <App className="h-screen"/>   
