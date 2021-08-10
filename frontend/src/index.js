@@ -18,7 +18,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Auth0Provider
         domain="dev-prmczu8a.eu.auth0.com"
-        clientId="TbFns5oLjRMT6xtH9vPJYYD3dBTYtHox"
+        clientId="7synNevGl37rECv6tBS3Hv06mYduRgmL"
         redirectUri="https://localhost:3306/beerlist"
         audience="https://dev-prmczu8a.eu.auth0.com/api/v2/"
       > 
