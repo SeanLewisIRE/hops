@@ -18,9 +18,9 @@ ReactDOM.render(
     <BrowserRouter>
       <Auth0Provider
         domain="dev-prmczu8a.eu.auth0.com"
-        clientId="7synNevGl37rECv6tBS3Hv06mYduRgmL"
+        clientId="TbFns5oLjRMT6xtH9vPJYYD3dBTYtHox"
         redirectUri="https://localhost:3306/beerlist"
-        audience="https://hops-api"
+        audience="https://dev-prmczu8a.eu.auth0.com/api/v2/"
       > 
           <App className="h-screen"/>   
       </Auth0Provider>

@@ -35,20 +35,7 @@ const App = () => {
           <LoginPage />
         </Route> 
 
-        <ProtectedRoute path="/beerlist" component={BeerList} /> 
 
-        <ProtectedRoute path="/profile" component={ProfilePage} />
-
-        <ProtectedRoute path="/addbeer" component={AddBeer} />
-
-        <ProtectedRoute path="/search" component={SearchBeer} />
-
-        <ProtectedRoute path="/edit/:id" component={(props) => <EditBeer {...props} />} />
-
-        {/* This route/component is no longer required, all handled in BeerDetails now */}
-        {/* <ProtectedRoute path="/addcomment/:id" component={(props) => <AddComment {...props} />} /> */}
-
-        <ProtectedRoute path="/beerdetails/:id" component={(props) => <BeerDetails {...props}/>} />
 
         </Switch> 
           
